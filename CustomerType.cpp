@@ -100,7 +100,7 @@ string CustomerType::printOrders()
 	double totals = 0.0;
 
 	for_each(orders.begin(), orders.end(), [&totals, &out](Order order) {
-		out << order << endl;
+		out << order.printOrder() << endl;
 		//totals += order.getTotal();
 	});
 
