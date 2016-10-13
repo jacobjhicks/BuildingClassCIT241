@@ -11,7 +11,7 @@ using namespace std;
 
 class CustomerType
 {
-friend ostream& operator<<(ostream& out, CustomerType & rightConstmer);
+	friend ostream& operator<<(ostream& out, CustomerType & rightCustomer);
 public:
 	CustomerType();
 	CustomerType(string newCustId, string name, string email);
@@ -41,4 +41,3 @@ private:
 
 bool operator==(CustomerType & leftCustomer, CustomerType & rightCustomer);
 bool operator<=(CustomerType & leftCustomer, CustomerType & rightCustomer);
-
