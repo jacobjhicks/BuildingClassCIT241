@@ -28,49 +28,74 @@ CustomerType::~CustomerType()
 {
 }
 
+/**
+* Returns a string object of the customers ID.
+*/
 string CustomerType::getId()
 {
 	return custId;
 }
 
+/**
+* Returns a string object of the customers email.
+*/
 string CustomerType::getEmail()
 {
 	return email;
 }
 
+/**
+* Returns a string object of the customers name.
+*/
 string CustomerType::getName()
 {
 	return name;
 }
 
+/**
+ * Sets the email of the customer
+ */
 void CustomerType::setEmail(const string & newEmail)
 {
 	email = newEmail;
 }
 
+/**
+* Adds the given order to the customers list of orders
+*/
 void CustomerType::addOrder(const Order & order)
 {
 	orders.push_back(order);
 }
 
+/**
+ * Returns the order object with the given ID from the list of orders.
+ * Throws an exception if the orderId is not found.
+ */
 Order & CustomerType::getOrder(const string & orderId)
 {
-	auto found = find_if(orders.begin(), orders.end(), [& orderId](Order order) {
+	auto found = find_if(orders.begin(), orders.end(), [&orderId](Order order) {
 		return order.getOrderID() == orderId;
 	});
 
 	return *found;
 }
 
+/**
+ * Returns true if the orderId parameter is found within the orders list.
+ */
 bool CustomerType::findOrder(const string & orderId) const
 {
-	auto found = find_if(orders.begin(), orders.end(), [& orderId](Order order) {
+	auto found = find_if(orders.begin(), orders.end(), [&orderId](Order order) {
 		return order.getOrderID() == orderId;
 	});
 
 	return found != orders.end();
 }
 
+/**
+ * Removes all orders with the id matching the parameter
+ */
 void CustomerType::removeOrder(const string & orderId)
 {
 	orders.remove_if([orderId](Order order) {
@@ -78,13 +103,18 @@ void CustomerType::removeOrder(const string & orderId)
 	});
 }
 
+/**
+* Returns a string object detailing the customer.
+* Example:
+* "OK123       Full Name                         EmailAddress@example.com          "
+*/
 string CustomerType::print()
 {
 	ostringstream out;
 
-	out << setw(10) << right <<  custId;
-	out << setw(35) << left << name;
-	out << setw(35) << left << email;
+	out << setw(12) << left << custId;
+	out << setw(34) << left << name;
+	out << setw(34) << left << email;
 	out << endl;
 	printOrders();
 	out << endl;
@@ -92,6 +122,11 @@ string CustomerType::print()
 	return out.str();
 }
 
+/**
+ * Returns a string object of all this customers orders.
+ * Example:
+ * TBD
+ */
 string CustomerType::printOrders()
 {
 	ostringstream out;
@@ -109,33 +144,44 @@ string CustomerType::printOrders()
 	return out.str();
 }
 
+/**
+ * Returns a string object of all the order numbers, all on one line
+ * Example:
+ * "OR123       OR123       OR123      OR123     ..."
+ */
 string CustomerType::printOrderIds()
 {
 	stringstream out;
 
 	for (Order order : orders)
 	{
-		out << order.getOrderID() << endl;
+		out << left << setw(12) << order.getOrderID() << endl;
 	}
 
 	return out.str();
 }
 
-ostream & operator<<(ostream & out, CustomerType & rightConstmer)
+/**
+* Calls the print() function.
+*/
+ostream & operator<<(ostream & out, CustomerType & rightCustomer)
 {
-	out << setw(10) << right << rightConstmer.custId;
-	out << setw(35) << left << rightConstmer.name;
-	out << setw(35) << left << rightConstmer.email;
-	out << endl;
+	out << rightCustomer.print();
 
 	return out;
 }
 
+/**
+ * Returns true if the customers match
+ */
 bool operator==(CustomerType & leftCustomer, CustomerType & rightCustomer)
 {
 	return &leftCustomer == &rightCustomer || leftCustomer.getId() == rightCustomer.getId();
 }
 
+/**
+* Returns true if the left customer's name comes before the right customer's name
+*/
 bool operator<=(CustomerType & leftCustomer, CustomerType & rightCustomer)
 {
 	return leftCustomer.getName() < rightCustomer.getName();
