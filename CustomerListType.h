@@ -7,14 +7,18 @@
 #include "Order.h"
 class CustomerListType
 {
-friend ostream& operator<<(ostream& out, CustomerListType & rightConstmerList);
+	friend ostream& operator<<(ostream& out, CustomerListType & rightConstmerList);
 public:
 	CustomerListType();
 	~CustomerListType();
 
 	void addCustomer(const CustomerType customer);
-	list<CustomerType>::iterator findCustomerObject(const string& custId);
+
+	// Not needed?
+	//list<CustomerType>::iterator findCustomerObject(const string& custId);
 	CustomerType & getCustomer(const string & custId);
+	bool findCustomer(const string & custId);
+
 
 	string print();
 
