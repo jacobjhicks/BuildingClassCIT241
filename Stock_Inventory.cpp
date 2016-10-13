@@ -15,7 +15,7 @@ void Inventory::checkForLow() {
 		}
 	}
 }
-Stock& Stock::operator =(const std::string temp) {
+Stock& Stock::operator =(const std::string temp) { // not implemented yet, will work on right now
 	return stringToStock(temp);
 }
 orderItem Inventory::checkIfInStock(std::string id, int quantity) {
@@ -42,7 +42,7 @@ Stock& Inventory::findItem(std::string id) {
 void Inventory::createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint) {
 	Stock s;
 	std::ofstream stream;
-
+	// sets an Stock equal to the parameters 
 	s.id = id;
 	s.desc = desc;
 	s.quantity = quantity;
@@ -60,34 +60,53 @@ void Inventory::createItem(std::string id, std::string desc, int quantity, int i
 	stream << quantity + '\n';
 	stream << inStock + '\n';
 	stream << supplierId + '\n';
-	stream << reorderPoint + '\n';
+	stream << reorderPoint + '\n'; //This prints out in new lines in a file named after it's ID , probablly needs to be changed to prof. North's criteria 
 }
 
 Stock stringToStock(std::string s) {
-	Stock rip;
-	int harambe = 0;
+	Stock stockItem;
+
+	int temp = 0;
+
 	std::vector<std::string> vars;
+
 	for (int x = 0; x < 6; x++) {
-		vars[x] = s.substr(harambe, s.find('\n', x));
-		harambe = s.find('\n', x) + 1;
+
+		vars[x] = s.substr(temp, s.find('\n', x));
+
+		temp = s.find('\n', x) + 1;
+
 	}
-	rip.id = vars[0];
-	rip.desc = vars[1];
-	rip.quantity = std::stoi(vars[2]);
-	rip.inStock = std::stoi(vars[3]);
-	rip.supplierId = vars[4];
-	rip.reorderPoint = std::stoi(vars[5]);
-	return rip;
+
+	stockItem.id = vars[0];
+
+	stockItem.desc = vars[1];
+
+	stockItem.quantity = std::stoi(vars[2]);
+
+	stockItem.inStock = std::stoi(vars[3]);
+
+	stockItem.supplierId = vars[4];
+
+	stockItem.reorderPoint = std::stoi(vars[5]);
+
+	return stockItem;
 }
 
 std::vector<std::string> Inventory::outputList() {
 	std::ifstream stream;
+
 	std::string line;
+
 	std::vector<std::string> list;
+
 	stream.open("products.txt"); // list of files to load
+
 	while (std::getline(stream, line)) {
+
 		stream.close();
 		stream.open("products/" + line + ".txt"); // files with all the information about stuff
+
 		while (stream.is_open()) {
 			std::string agam = "";
 			while (std::getline(stream, line)) {
