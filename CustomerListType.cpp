@@ -18,33 +18,60 @@ void CustomerListType::addCustomer(const CustomerType customer)
 	customers.push_back(customer);
 }
 
-list<CustomerType>::iterator CustomerListType::findCustomerObject(const string & custId)
-{
-	list<CustomerType>::iterator found = find_if(customers.begin(), customers.end(), [& custId](CustomerType customer) {
-		return customer.getId() == custId;
-	});
+// Not needed?
+//list<CustomerType>::iterator CustomerListType::findCustomerObject(const string & custId)
+//{
+//	list<CustomerType>::iterator found = find_if(customers.begin(), customers.end(), [&custId](CustomerType customer) {
+//		return customer.getId() == custId;
+//	});
+//
+//	if (found != customers.end())
+//		return found;
+//	throw exception("Customer not found.");
+//}
 
-	if(found != customers.end())
-		return found;
-	throw exception("Customer not found.");
-}
-
+/**
+* Returns the CustomerType object with the given ID from the list of customers.
+* Throws an error if the custId is not found
+*/
 CustomerType & CustomerListType::getCustomer(const string & custId)
 {
 	auto found = find_if(customers.begin(), customers.end(), [&custId](CustomerType customer) {
 		return customer.getId() == custId;
 	});
 
-	return *found;
+	if (found != customers.end())
+		return *found;
+	throw exception("Customer not found.");
 }
 
+/**
+* Returns true if a customer with the given ID is found.
+*/
+bool CustomerListType::findCustomer(const string & custId)
+{
+	auto found = find_if(customers.begin(), customers.end(), [&custId](CustomerType customer) {
+		return customer.getId() == custId;
+	});
+
+	return found != customers.end();
+}
+
+/**
+ * Returns a string object detailing each customer.
+ * Example:
+ * "CustId      Name                              Email                             "
+ * "--------------------------------------------------------------------------------"
+ * "OK123       Full Name                         EmailAddress@example.com          "
+ * "...                                                                             "
+ */
 string CustomerListType::print()
 {
 	stringstream out;
 
-	out << left << "  CustId  ";
-	out << left << setw(17) << setw(17) << "Name";
-	out << left << setw(17) << setw(17) << "Email";
+	out << left << setw(12) << "CustId";
+	out << left << setw(34) << "Name";
+	out << left << setw(34) << "Email";
 	out << endl;
 	out << left << setfill('-') << setw(80) << "" << endl;
 	for_each(customers.begin(), customers.end(), [&out](CustomerType customer) {
@@ -53,6 +80,10 @@ string CustomerListType::print()
 
 	return out.str();
 }
+
+/**
+ * Calls the print() function.
+ */
 ostream & operator<<(ostream & out, CustomerListType & rightConstmerList)
 {
 	out << rightConstmerList.print();
