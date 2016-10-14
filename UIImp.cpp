@@ -48,6 +48,11 @@ void UI::mainMenu()
 			cout << "Enter customer email: " << endl;
 			cin >> customeremail;
 			// After reading in customeremail - check if it is valid
+
+			// Establish a general email pattern
+			// regex emailMatch("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$");
+			// Check the input for the regex pattern
+			// if (regex_match(customeremail, emailMatch))
 			int i = customeremail.find('@', 1);
 			if (customeremail.find('@', 1) == true && customeremail.find('.', i + 1) == true && customeremail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
 				emailCheck = false;
