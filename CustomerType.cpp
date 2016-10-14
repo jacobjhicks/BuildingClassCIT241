@@ -162,11 +162,16 @@ string CustomerType::printOrderIds()
 }
 
 /**
-* Calls the print() function.
+* Prints the customers details.
+* Example:
+* "OK123       Full Name                         EmailAddress@example.com          "
 */
 ostream & operator<<(ostream & out, CustomerType & rightCustomer)
 {
-	out << rightCustomer.print();
+
+	out << setw(12) << left << rightCustomer.getId();
+	out << setw(34) << left << rightCustomer.getName();
+	out << setw(34) << left << rightCustomer.getEmail();
 
 	return out;
 }

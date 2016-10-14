@@ -82,11 +82,19 @@ string CustomerListType::print()
 }
 
 /**
- * Calls the print() function.
- */
+* Prints the details of each customer.
+* Example:
+* "CustId      Name                              Email                             "
+* "--------------------------------------------------------------------------------"
+* "OK123       Full Name                         EmailAddress@example.com          "
+* "...                                                                             "
+*/
 ostream & operator<<(ostream & out, CustomerListType & rightConstmerList)
 {
-	out << rightConstmerList.print();
+	for (CustomerType customer : rightConstmerList.customers)
+	{
+		out << customer << endl;
+	}
 
 	return out;
 }
