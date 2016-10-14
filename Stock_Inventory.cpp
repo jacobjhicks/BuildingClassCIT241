@@ -1,10 +1,5 @@
-//S
 // #include "stdafx.h"
 #include "Stock_Inventory.h"
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
 
 void Inventory::checkForLow() {
 	std::vector <std::pair<std::string, int>> list;
@@ -15,21 +10,25 @@ void Inventory::checkForLow() {
 		}
 	}
 }
+
 Stock& Stock::operator =(const std::string temp) { // not implemented yet, will work on right now
 	return stringToStock(temp);
 }
-orderItem Inventory::checkIfInStock(std::string id, int quantity) {
-	for (int x = 0; x < stocks.size(); x++) {
-		if (stocks[x].id == id) {
-			if (stocks[x].quantity >= quantity) {
-				stocks[x].quantity -= quantity;
-			}
-			else {
-				checkForLow();
-			}
-		}
-	}
-}
+
+//orderItem Inventory::checkIfInStock(std::string id, int quantity) {
+//	for (int x = 0; x < stocks.size(); x++) {
+//		if (stocks[x].id == id) {
+//			if (stocks[x].quantity >= quantity) {
+//				stocks[x].quantity -= quantity;
+//			}
+//			else {
+//				checkForLow();
+//			}
+//		}
+//	}
+//  // Must return an orderItem to compile
+//	TODO: return orderItem or throw exception("message"); ???
+//}
 
 Stock& Inventory::findItem(std::string id) {
 	for (int x = 0; x < stocks.size(); x++) {
@@ -37,6 +36,8 @@ Stock& Inventory::findItem(std::string id) {
 			return stocks[x];
 		}
 	}
+
+	// TODO: return Stock or throw exception("message"); ???
 }
 
 void Inventory::createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint) {
@@ -74,7 +75,11 @@ Stock stringToStock(std::string s) {
 
 		vars[x] = s.substr(temp, s.find('\n', x));
 
-		temp = s.find('\n', x) + 1;
+		temp = s.find('\n', x) + 1; // This line produces a warning, 
+									// size_t find (char c, size_t pos = 0) const noexcept;
+									//	Return Value:
+									//	The position of the first character of the first match.
+									//	If no matches were found, the function returns string::npos.
 
 	}
 
@@ -113,7 +118,11 @@ std::vector<std::string> Inventory::outputList() {
 				std::cout << line << std::endl;
 				agam += line + '\n';
 			}
-			list.emplace_back(stringToStock(agam));
+			// TODO: This line causes a compiler error
+			// list.emplace_back(stringToStock(agam));
+				// list is a vector<string>
+				// stringToStock() returns a Stock object
+			
 			agam = "";
 			stream.close();
 		}

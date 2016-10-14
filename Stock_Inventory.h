@@ -46,3 +46,5 @@ public:
 //		SupplierItem() = default;
 //		SupplierItem(s suppid, s itemID, i amt);
 //};
+
+Stock stringToStock(std::string s); // Had to add definition
