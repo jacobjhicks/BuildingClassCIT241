@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <string>
+#include "CustomerListType.h"
+#include "Stock_Inventory.h"
 
 using namespace std;
 
@@ -14,8 +17,9 @@ public:
 	void orderMenu();
 	void invMenu();
 private:
-	// missing customer list
-	// inventory list
+
+	CustomerListType totalCustomers; // customer list
+	Inventory totalInventory; // inventory list
 	void custMenu(int ID);
 	//void addOrderData(CustomerType& cust);
 	// void updateOrderMenu();

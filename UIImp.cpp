@@ -1,13 +1,5 @@
-#include <iostream>
-#include <vector>
-#include <list>
 #include "Ui.h"
-#include <string>
-#include "CustomerListType.h"
-#include "CustomerType.h"
 
-using namespace std;
-CustomerListType totalCustomers;
 
 UI::UI()
 {
@@ -24,79 +16,79 @@ void UI::mainMenu()
 	int option;
 	string customername, customeremail, customerID;
 	bool emailCheck;
-	 CustomerType *tempCustomer;
+	CustomerType *tempCustomer;
 	cout << "main menu" << "1)add customer" << "2) remove coustomer"
 		<< "3)find customer" << "4) list customer information" << "5) Order menu" << "6) Inventory menu" << endl;
 	cin >> option;
-switch (option)
-{
-case 1:		// add customer
-	do
+	switch (option)
 	{
-		cout << "Enter Customer ID: "; 
+	case 1:		// add customer
+		do
+		{
+			cout << "Enter Customer ID: ";
+			cin >> customerID;
+			if (totalCustomers.findCustomer(customerID))
+			{
+				cout << endl << "Custeromer ID already exists.\nPlease Re-";
+			}
+		} while (totalCustomers.findCustomer(customerID));
+
+		// Need to get potential new customerID
+
+		// after reading in customerID - see if it already exists
+
+		// if it already exists, warn user and go back to customer menu
+
+		// collect rest of customer information
+		cout << "enter customer name" << endl;
+		// names are notorious for having spaces in them - must use getline
+		cin.clear();
+		getline(cin, customername, '\n');
+		do
+		{
+			cout << "Enter customer email: " << endl;
+			cin >> customeremail;
+			int i = customeremail.find('@', 1);
+			if (customeremail.find('@', 1) == true && customeremail.find('.', i + 1) == true && customeremail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
+				emailCheck = false;
+			else
+			{
+				cout << "ERROR: Incorrect email address entered. \nPlease Re-";
+				emailCheck = true;
+			}
+		} while (emailCheck);
+		// build customer and add to customer
+		// customerlist.addCustomer(Customer(----,-----,-----));
+		tempCustomer = new CustomerType(customerID, customername, customeremail);
+		totalCustomers.addCustomer(*tempCustomer);
+		break;
+	case 2:		// remove customer
+				// you may want to display list of customerIDs so user can choose one
+		cout << "enter customer ID" << endl;
 		cin >> customerID;
-		if (totalCustomers.findCustomer(customerID))
-		{
-			cout << endl << "Custeromer ID already exists.\nPlease Re-";
-		}
-	} while (totalCustomers.findCustomer(customerID));
-	
-	// Need to get potential new customerID
-
-	// after reading in customerID - see if it already exists
-
-	// if it already exists, warn user and go back to customer menu
-
-	// collect rest of customer information
-	cout << "enter customer name" << endl;
-	// names are notorious for having spaces in them - must use getline
-	cin.clear();
-	getline(cin,customername,'\n');
-	do
-	{
-		cout << "Enter customer email: " << endl;
-		cin >> customeremail;
-		int i = customeremail.find('@', 1);
-		if (customeremail.find('@', 1) == true && customeremail.find('.', i + 1) == true && customeremail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
-			emailCheck = false;
-		else
-		{
-			cout << "ERROR: Incorrect email address entered. \nPlease Re-";
-			emailCheck = true;
-		}
-	} while (emailCheck);
-	// build customer and add to customer
-	// customerlist.addCustomer(Customer(----,-----,-----));
-	tempCustomer=new CustomerType(customerID, customername, customeremail);
-	totalCustomers.addCustomer(*tempCustomer);
-		break;
-case 2:		// remove customer
-	// you may want to display list of customerIDs so user can choose one
-	cout << "enter customer ID" << endl;
-	cin >> customerID;
-	// find customer object in customerlist returning iterator pointing to the customer object
-	// if found
-	//		use customer list remove method passing iterator
-	// else
-	//		message to user not found
+		// find customer object in customerlist returning iterator pointing to the customer object
+		// if found
+		//		use customer list remove method passing iterator
+		// else
+		//		message to user not found
 
 		break;
-case 3:		// find customer returning iterator pointing to the customer
-	// you may want to display list of customerIDs so user can choose one
-	cout << "enter customer ID" << endl;
-	cin >> customerID;
-	// CustomerType& cust = custlist.getcustomer(customerID)
-	break;
-// case 4: list customer information
-	// you may want to display list of customerIDs so user can choose one
-	cout << "enter customer ID" << endl;
-	cin >> customerID;
-	// CustomerType& cust = custlist.getcustomer(customerID)
-	// use customer operator<< to print customer
-	break;
-// case 5:  order menu
-	// orderMenu()
-}
+	case 3:		// find customer returning iterator pointing to the customer
+				// you may want to display list of customerIDs so user can choose one
+		cout << "enter customer ID" << endl;
+		cin >> customerID;
+		// CustomerType& cust = custlist.getcustomer(customerID)
+		break;
+		// case 4: list customer information
+		// you may want to display list of customerIDs so user can choose one
+		cout << "enter customer ID" << endl;
+		cin >> customerID;
+		// CustomerType& cust = custlist.getcustomer(customerID)
+		// use customer operator<< to print customer
+		break;
+		// case 5:  order menu
+		// orderMenu()
+	}
 }
 
 void UI::orderMenu()
@@ -105,7 +97,7 @@ void UI::orderMenu()
 	cout << "Order Menu" <<
 		"1) List Orders for Customer" << endl <<
 		"2) Over all orders for all customers" << endl <<
-		"3) Add order to customer" << endl << 
+		"3) Add order to customer" << endl <<
 		"4) Cancel order for a customer" << endl <<
 		"5) Update order for a customer" << endl <<
 		endl;
@@ -125,13 +117,13 @@ void UI::orderMenu()
 		//		customerid not found
 		break;
 	case 2:     // list all orders for all customers
-		// use for range loop to retrieve each customer
-		//		for current customer invoke printOrders() method
-		// end loop
+				// use for range loop to retrieve each customer
+				//		for current customer invoke printOrders() method
+				// end loop
 
 		break;
 	case 3:		// add an order for a customer
-		//customerListprint;
+				//customerListprint;
 		cin >> custID;
 		// Customer& cust = custlist.getcustomer(custID)
 		// if cust != emptyCustomer
@@ -139,7 +131,7 @@ void UI::orderMenu()
 		// else
 		//		customerid not found
 	case 4:		// cancel order
-		//customerListprint;
+				//customerListprint;
 		cin >> custID;
 		// Customer& cust = custlist.getcustomer(custID)
 		// if cust != emptyCustomer
@@ -152,7 +144,7 @@ void UI::orderMenu()
 		// else
 		//		customerid not found
 	case 5:			// update order
-		//	updateOrderMenu()
+					//	updateOrderMenu()
 	default:
 		break;
 	}
