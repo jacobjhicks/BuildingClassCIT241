@@ -154,6 +154,7 @@
     <ClCompile Include="CustomerListType.cpp" />
     <ClCompile Include="CustomerType.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Maincpp.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="orderItem.cpp" />
     <ClCompile Include="orderItemOrder.cpp" />

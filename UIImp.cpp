@@ -17,8 +17,8 @@ void UI::mainMenu()
 	string customername, customeremail, customerID;
 	bool emailCheck;
 	CustomerType *tempCustomer;
-	cout << "main menu" << "1)add customer" << "2) remove coustomer"
-		<< "3)find customer" << "4) list customer information" << "5) Order menu" << "6) Inventory menu" << endl;
+	cout << "Main Menu \n\n1) Add customer \n2) Remove coustomer \n3) Find customer" <<
+		"\n4) List customer information \n5) Order menu \n6) Inventory menu" << endl;
 	cin >> option;
 	switch (option)
 	{
