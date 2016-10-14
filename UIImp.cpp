@@ -25,29 +25,29 @@ void UI::mainMenu()
 	case 1:		// add customer
 		do
 		{
+			// Need to get potential new customerID
 			cout << "Enter Customer ID: ";
 			cin >> customerID;
+			// after reading in customerID - see if it already exists
 			if (totalCustomers.findCustomer(customerID))
 			{
+				// if it already exists, warn user and go back to customer menu
 				cout << endl << "Custeromer ID already exists.\nPlease Re-";
 			}
 		} while (totalCustomers.findCustomer(customerID));
 
-		// Need to get potential new customerID
-
-		// after reading in customerID - see if it already exists
-
-		// if it already exists, warn user and go back to customer menu
-
 		// collect rest of customer information
+
 		cout << "enter customer name" << endl;
 		// names are notorious for having spaces in them - must use getline
-		cin.clear();
+		cin.clear(); // .clear() might be needed
 		getline(cin, customername, '\n');
 		do
 		{
+			// Need to get potential new customeremail
 			cout << "Enter customer email: " << endl;
 			cin >> customeremail;
+			// After reading in customeremail - check if it is valid
 			int i = customeremail.find('@', 1);
 			if (customeremail.find('@', 1) == true && customeremail.find('.', i + 1) == true && customeremail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
 				emailCheck = false;

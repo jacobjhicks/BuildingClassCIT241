@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <string>
+#include <regex>
 #include "CustomerListType.h"
 #include "Stock_Inventory.h"
 
