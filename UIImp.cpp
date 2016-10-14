@@ -84,15 +84,13 @@ void UI::mainMenu()
 		cin >> customerID;
 		// CustomerType& cust = custlist.getcustomer(customerID)
 		break;
-		// case 4: list customer information
-		// you may want to display list of customerIDs so user can choose one
-		cout << "enter customer ID" << endl;
-		cin >> customerID;
-		// CustomerType& cust = custlist.getcustomer(customerID)
-		// use customer operator<< to print customer
+	case 4: // list customer information
+		cout << "Current customers:" << endl;
+		cout << totalCustomers << endl;
 		break;
 		// case 5:  order menu
 		// orderMenu()
+	default:
 	}
 }
 
