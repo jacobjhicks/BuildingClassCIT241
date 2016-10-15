@@ -1,0 +1,20 @@
+C|Acme12|Acme Explosives|acmebang@hotmail.com
+O|150029|1/15/2015|1/27/2015|1/1/1900
+I|ChB00123|Cherry Bomb Level 1|3|16.50
+I|SpK01879|Base Sparklers|8|4.50
+O|150657|2/22/2015|3/1/2015|1/1/1900
+I|HmH01765|Hammer Head Shower|2|47.90
+I|ChB00123|Cherry Bomb Level 1|9|16.75
+C|Miki11|Mikie's Explosive Fun Center|mikifireworks@msn.com
+O|150076|1/23/2015|1/28/2015|1/1/1900
+I|SpK01879|Base Sparklers|6|4.55
+I|ClB02190|Cloud Burst Flower Head|3|59.35
+I|NiF00289|Niagra Falls Disperse|5|43.58
+C|Rich76|Richland Community|richlandcommfair@hotmail.com
+O|150029|1/15/2015|1/27/2015|1/1/1900
+I|ChB00123|Cherry Bomb Level 1|3|16.50
+I|SpK01879|Base Sparklers|8|4.50
+O|150657|2/22/2015|3/1/2015|1/1/1900
+I|HmH01765|Hammer Head Shower|2|47.90
+I|ChB00123|Cherry Bomb Level 1|9|16.75
+I|NiF00289|Niagra Falls Disperse|5|43.58
