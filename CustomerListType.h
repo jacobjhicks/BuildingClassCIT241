@@ -19,6 +19,8 @@ public:
 	CustomerType & getCustomer(const string & custId);
 	bool findCustomer(const string & custId);
 	void removeCustomer(CustomerType customer);
+	string getOrders(CustomerType customer);
+	void addOrder(CustomerType customer, const Order & order);
 
 
 	string print();

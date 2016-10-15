@@ -6,6 +6,7 @@
 #include <regex>
 #include "CustomerListType.h"
 #include "Stock_Inventory.h"
+#include"Order.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ private:
 	CustomerListType totalCustomers; // customer list
 	Inventory totalInventory; // inventory list
 	void custMenu(int ID);
-	//void addOrderData(CustomerType& cust);
+	void addOrderData(Order &newOrder);
 	// void updateOrderMenu();
 };
 

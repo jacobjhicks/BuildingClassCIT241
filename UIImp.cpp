@@ -1,4 +1,6 @@
 #include "Ui.h"
+#include "Date.h"
+#include "Order.h"
 #include <iostream>
 #include <string>
 
@@ -21,7 +23,7 @@ void UI::mainMenu()
 		string customername, customeremail, customerID;
 		bool emailCheck,remCustomerCheck;
 		CustomerType *tempCustomer;
-		cout << string(20, '\n');
+		cout << string(3, '\n');
 		cout << "Main Menu \n\n1) Add customer \n2) Remove coustomer \n3) Find customer" <<
 			"\n4) List customer information \n5) Order menu \n6) Inventory menu \n7)Exit" << endl;
 		cin >> option;
@@ -133,24 +135,35 @@ void UI::mainMenu()
 
 void UI::orderMenu()
 {
-	int option, custID;
+	int option;
+	string custID;
+	bool notValidCustomer;
+	Order *tempOrder;
+
 	cout << "Order Menu" <<
-		"1) List Orders for Customer" << endl <<
-		"2) Over all orders for all customers" << endl <<
-		"3) Add order to customer" << endl <<
-		"4) Cancel order for a customer" << endl <<
-		"5) Update order for a customer" << endl <<
-		endl;
+		"\n1) List Orders for Customer \n2) Over all orders for all customers \n3) Add order to customer" <<
+		"\n4) Cancel order for a customer \n5) Update order for a customer \n";
 	cin >> option;
 
 	switch (option)
 	{
 	case 1:     // list orders for a customer
-		cout << "Enter customer ID: ";
-		//customerListprint;
-		cin >> custID;
-		//custMenu(custID);???
-		// iterator = find customer
+		cout << "Current customers:" << endl;
+		cout << totalCustomers << endl;//customerListprint;
+		do
+		{
+			cout << "Enter customer ID: "; 
+			cin >> custID;
+			if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+				notValidCustomer = false;
+				cout << totalCustomers.getOrders(totalCustomers.getCustomer(custID)) << endl;
+			}else {
+				notValidCustomer = true;
+				cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+			}
+		} while (notValidCustomer);
+		
+		
 		// if iterator not = customer list end
 		//		(*iterator) invoke method printOrders()
 		// else
@@ -164,12 +177,29 @@ void UI::orderMenu()
 		break;
 	case 3:		// add an order for a customer
 				//customerListprint;
-		cin >> custID;
+		cout << "Current customers:" << endl;
+		cout << totalCustomers << endl;//customerListprint;
+		do
+		{
+			cout << "Enter customer ID: ";
+			cin >> custID;
+			if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+				notValidCustomer = false;
+				tempOrder = new Order();
+				addOrderData(*tempOrder);
+				totalCustomers.addOrder(totalCustomers.getCustomer(custID), *tempOrder);// - Get oder to pass in
+			}
+			else {
+				notValidCustomer = true;
+				cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+			}
+		} while (notValidCustomer);
 		// Customer& cust = custlist.getcustomer(custID)
 		// if cust != emptyCustomer
 		//		invoke addOrderData(cust)
 		// else
 		//		customerid not found
+		break;
 	case 4:		// cancel order
 				//customerListprint;
 		cin >> custID;
@@ -263,6 +293,40 @@ void UI::invMenu()
 	//		next
 	//						
 	//}
+}
+
+void UI::addOrderData(Order &newOrder)
+{
+	string ordId, ordDateString, delDateString, itemID, option;
+	Date ordDate,delDate;
+	int quantity;
+	bool moreItems = true;
+	orderItem *tempItem;
+	cout << "\nEnter Order Id: ";
+	cin >> ordId;
+	cout << "\nEnter Oreder Date Ex: 1/1/1990: ";
+	cin >> ordDateString;
+	ordDate = { ordDateString };
+	cout << "\nEnter Oreder Date Ex: 1/1/1990: ";
+	cin >> delDateString;
+	delDate = { delDateString };
+	Order tempOrder(ordId, ordDate, delDate);
+	
+	do
+	{
+		cout << "\nEnter Item Id: ";
+		cin >> itemID;
+		cout << "\nEnter quantity: ";
+		cin >> quantity;
+		tempItem = new orderItem(itemID, quantity);
+		tempOrder.addOrderItem(*tempItem);
+		cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
+		cin >> option;
+		std::transform(option.begin(), option.end(), option.begin(), ::toupper);
+		if (option == "FINISH")
+			moreItems = false;
+	} while (moreItems);
+	newOrder = tempOrder;
 }
 
 //void UI::custMenu(int ID)

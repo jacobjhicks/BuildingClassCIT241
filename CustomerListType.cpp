@@ -71,6 +71,34 @@ void CustomerListType::removeCustomer( CustomerType customer)
 	}
 }
 
+string CustomerListType::getOrders(CustomerType customer)
+{
+	list<CustomerType>::iterator rmIt;
+	string out;
+	for (rmIt = customers.begin(); rmIt != customers.end(); ++rmIt)
+	{
+		if (customer == *rmIt)
+		{
+			out = rmIt->printOrders();
+			break;
+		}					
+	}
+	return out;
+}
+
+void CustomerListType::addOrder(CustomerType customer, const Order & order)
+{
+	list<CustomerType>::iterator rmIt;
+	for (rmIt = customers.begin(); rmIt != customers.end(); ++rmIt)
+	{
+		if (customer == *rmIt)
+		{
+			rmIt->addOrder(order);
+			break;
+		}
+	}
+}
+
 /**
  * Returns a string object detailing each customer.
  * Example:
