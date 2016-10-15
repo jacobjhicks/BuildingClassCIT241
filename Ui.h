@@ -15,10 +15,10 @@ public:
 	UI();
 	~UI();
 	void mainMenu();
+
+private:
 	void orderMenu();
 	void invMenu();
-private:
-
 	CustomerListType totalCustomers; // customer list
 	Inventory totalInventory; // inventory list
 	void custMenu(int ID);

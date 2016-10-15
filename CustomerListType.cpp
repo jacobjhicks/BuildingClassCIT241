@@ -57,6 +57,20 @@ bool CustomerListType::findCustomer(const string & custId)
 	return found != customers.end();
 }
 
+void CustomerListType::removeCustomer( CustomerType customer)
+{
+	//customers.remove(*customer);
+	list<CustomerType>::iterator rmIt;
+	for (rmIt = customers.begin(); rmIt != customers.end(); ++rmIt)
+	{
+		if (customer == *rmIt)
+		{
+			customers.erase(rmIt);
+			break;
+		}
+	}
+}
+
 /**
  * Returns a string object detailing each customer.
  * Example:

@@ -18,10 +18,12 @@ public:
 	//list<CustomerType>::iterator findCustomerObject(const string& custId);
 	CustomerType & getCustomer(const string & custId);
 	bool findCustomer(const string & custId);
+	void removeCustomer(CustomerType customer);
 
 
 	string print();
 
 private:
 	list<CustomerType> customers;
+	//list<CustomerType>::iterator it = customers.begin(); // I don't need this yet...
 };
