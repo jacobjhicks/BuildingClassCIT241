@@ -384,11 +384,12 @@ void UI::addOrderData(Order &newOrder)
 	bool moreItems = true;
 	orderItem *tempItem;
 	cout << "\nEnter Order Id: ";
+	// Validate Order ID here ???
 	cin >> ordId;
-	cout << "\nEnter Oreder Date Ex: 1/1/1990: ";
+	cout << "\nEnter Order Date Ex: 1/1/1990: ";
 	cin >> ordDateString;
 	ordDate = { ordDateString };
-	cout << "\nEnter Oreder Date Ex: 1/1/1990: ";
+	cout << "\nEnter Delivery Date Ex: 1/1/1990: ";
 	cin >> delDateString;
 	delDate = { delDateString };
 	Order tempOrder(ordId, ordDate, delDate);
