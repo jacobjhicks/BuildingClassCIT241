@@ -22,6 +22,8 @@ public:
 	string getOrders(CustomerType customer);
 	void addOrder(CustomerType customer, const Order & order);
 
+	list<CustomerType>::iterator begin();
+	list<CustomerType>::iterator end();
 
 	string print();
 
