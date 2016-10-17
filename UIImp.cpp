@@ -23,10 +23,33 @@ void UI::mainMenu()
 		string customername, customeremail, customerID;
 		bool emailCheck,remCustomerCheck;
 		CustomerType *tempCustomer;
+		bool verifyInput = false;
 		cout << string(3, '\n');
-		cout << "Main Menu \n\n1) Add customer \n2) Remove coustomer \n3) Find customer" <<
-			"\n4) List customer information \n5) Order menu \n6) Inventory menu \n7) Exit" << endl;
-		cin >> option;
+
+		do
+		{
+			if (verifyInput)
+			{
+				// This locks up if cin has never been used. Skip on first iteration
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			cout << "Main Menu \n\n1) Add customer \n2) Remove coustomer \n3) Find customer" <<
+				"\n4) List customer information \n5) Order menu \n6) Inventory menu \n7) Exit" << endl;
+			cin >> option;
+
+			// Set to verify cin after first read
+			verifyInput = true;
+
+			if (!cin)
+			{
+				cout << endl;
+				cout << "Invalid option entered. Please try again." << endl;
+				cout << endl;
+			}
+
+		} while (!cin);
+		
 		switch (option)
 		{
 		case 1:		// add customer
