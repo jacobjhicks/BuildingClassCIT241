@@ -185,38 +185,121 @@ void UI::orderMenu()
 				notValidCustomer = false;
 				tempOrder = new Order();
 				addOrderData(*tempOrder);
-				totalCustomers.addOrder(totalCustomers.getCustomer(custID), *tempOrder);// - Get oder to pass in
-			}
-			else {
-				notValidCustomer = true;
-				cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
-			}
-		} while (notValidCustomer);
-		// Customer& cust = custlist.getcustomer(custID)
-		// if cust != emptyCustomer
-		//		invoke addOrderData(cust)
-		// else
-		//		customerid not found
-		break;
-	case 4:		// cancel order
-				//customerListprint;
-		cin >> custID;
-		// Customer& cust = custlist.getcustomer(custID)
-		// if cust != emptyCustomer
-		//		get orderid and canceldate
-		//		if (*iterator).findOrder(orderid) is true
-		//			(*iterator).removeOrder(orderid)
-		//		else
-		//			error message
-		//		endif	
-		// else
-		//		customerid not found
-	case 5:			// update order
-					//	updateOrderMenu()
-	default:
-		break;
-	}
 
+
+void UI::orderMenu()
+{
+	int option;
+	string custID;
+	bool notValidCustomer;
+	Order *tempOrder;
+	bool stayInMenu = true;
+	
+	do
+	{
+		do
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Order Menu" <<
+				"\n1) List Orders for Customer \n2) Over all orders for all customers \n3) Add order to customer" <<
+				"\n4) Cancel order for a customer \n5) Update order for a customer \n6) Go Back \n";
+			cin >> option;
+
+			if (!cin)
+			{
+				cout << endl;
+				cout << "Invalid option entered. Please try again." << endl;
+				cout << endl;
+			}
+
+		} while (!cin);
+		
+
+		switch (option)
+		{
+		case 1:     // list orders for a customer
+			cout << "Current customers:" << endl;
+			cout << totalCustomers << endl;//customerListprint;
+			do
+			{
+				cout << "Enter customer ID: ";
+				cin >> custID;
+				if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+					notValidCustomer = false;
+					cout << totalCustomers.getOrders(totalCustomers.getCustomer(custID)) << endl;
+				}
+				else {
+					notValidCustomer = true;
+					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+				}
+			} while (notValidCustomer);
+
+
+			// if iterator not = customer list end
+			//		(*iterator) invoke method printOrders()
+			// else
+			//		customerid not found
+			break;
+		case 2:     // list all orders for all customers
+					// use for range loop to retrieve each customer
+			for (CustomerType customer : totalCustomers)
+			{
+				// for current customer invoke printOrders() method
+				cout << customer.printOrders();
+			}
+
+			break;
+		case 3:		// add an order for a customer
+					//customerListprint;
+			cout << "Current customers:" << endl;
+			cout << totalCustomers << endl;//customerListprint;
+			do
+			{
+				cout << "Enter customer ID: ";
+				cin >> custID;
+				if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+					notValidCustomer = false;
+					tempOrder = new Order();
+					addOrderData(*tempOrder);
+					totalCustomers.addOrder(totalCustomers.getCustomer(custID), *tempOrder);// - Get oder to pass in
+				}
+				else {
+					notValidCustomer = true;
+					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+				}
+			} while (notValidCustomer);
+			// Customer& cust = custlist.getcustomer(custID)
+			// if cust != emptyCustomer
+			//		invoke addOrderData(cust)
+			// else
+			//		customerid not found
+			break;
+		case 4:		// cancel order
+					//customerListprint;
+			cin >> custID;
+			// Customer& cust = custlist.getcustomer(custID)
+			// if cust != emptyCustomer
+			//		get orderid and canceldate
+			//		if (*iterator).findOrder(orderid) is true
+			//			(*iterator).removeOrder(orderid)
+			//		else
+			//			error message
+			//		endif	
+			// else
+			//		customerid not found
+		case 5:			// update order
+						//	updateOrderMenu()
+			break;
+		case 6:
+			stayInMenu = false;
+			break;
+		default:
+			cout << "Invalid Option \"" << option << "\"" << endl;
+			break;
+		}
+
+	} while (stayInMenu);
 }
 
 void UI::invMenu()
