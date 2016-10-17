@@ -100,6 +100,24 @@ void CustomerListType::addOrder(CustomerType customer, const Order & order)
 }
 
 /**
+* Returns an iterator to the first customer.
+*/
+list<CustomerType>::iterator CustomerListType::begin()
+{
+
+	return customers.begin();
+}
+
+/**
+* Returns an iterator just past the last customer
+*/
+list<CustomerType>::iterator CustomerListType::end()
+{
+
+	return customers.end();
+}
+
+/**
  * Returns a string object detailing each customer.
  * Example:
  * "CustId      Name                              Email                             "
