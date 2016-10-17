@@ -25,7 +25,7 @@ void UI::mainMenu()
 		CustomerType *tempCustomer;
 		cout << string(3, '\n');
 		cout << "Main Menu \n\n1) Add customer \n2) Remove coustomer \n3) Find customer" <<
-			"\n4) List customer information \n5) Order menu \n6) Inventory menu \n7)Exit" << endl;
+			"\n4) List customer information \n5) Order menu \n6) Inventory menu \n7) Exit" << endl;
 		cin >> option;
 		switch (option)
 		{
@@ -45,12 +45,10 @@ void UI::mainMenu()
 
 			// collect rest of customer information
 
-			cout << "Enter customer name:";
+			cout << "Enter customer name: ";
 			// names are notorious for having spaces in them - must use getline
-			//cin.clear(); // .clear() might be needed - Not working... Used cin
-			//getline(cin, customername, '\n');
-			cin >> customername;
-			cin.clear();
+			cin.ignore();
+			getline(cin, customername);
 			do
 			{
 				// Need to get potential new customeremail
