@@ -11,8 +11,13 @@ void Inventory::checkForLow() {
 	}
 }
 
-Stock& Stock::operator =(const std::string temp) { // not implemented yet, will work on right now
-	return stringToStock(temp);
+Stock& Stock::operator =(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
+	id = S.id;
+	desc = S.desc;
+	quantity = S.quantity;
+	inStock = S.inStock;
+	supplierId = S.supplierId;
+	reorderPoint = S.reorderPoint;
 }
 
 //orderItem Inventory::checkIfInStock(std::string id, int quantity) {
@@ -80,6 +85,7 @@ Stock stringToStock(std::string s) {
 									//	Return Value:
 									//	The position of the first character of the first match.
 									//	If no matches were found, the function returns string::npos.
+								// This is because It's checking for new lines. But I think I need to recode it so It looks for the | instead of a new line.
 
 	}
 
@@ -93,7 +99,7 @@ Stock stringToStock(std::string s) {
 
 	stockItem.supplierId = vars[4];
 
-	stockItem.reorderPoint = std::stoi(vars[5]);
+	stockItem.reorderPoint = std::stoi(vars[5]); // This is setting the items = to there place in a vector of stoi IDK if it works, but it will definetly compile
 
 	return stockItem;
 }
