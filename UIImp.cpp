@@ -143,6 +143,7 @@ void UI::mainMenu()
 			orderMenu();
 			break;
 		case 6: //inv menu
+			invMenu();
 			break;
 		case 7: //exit
 			continueUi = false;
@@ -290,79 +291,90 @@ void UI::orderMenu()
 	} while (stayInMenu);
 }
 
-//void UI::invMenu()
-//{
-	//int option, custID;
-	//cout << "Order Menu" <<
-	//	"1) List all items in inventory" << endl <<
-	//	"2) Display an item in inventory" << endl <<
-	//	"3) Process order from supplier" << endl <<
-	//	"4) Generate orders to the suppliers for a given month" << endl <<
-	//	"5) Find the high demand items for a period of time - month, qtr, yr" << endl <<
-	//	endl;
-	//cin >> option;
+void UI::invMenu()
+{
+	int option, custID;
+	bool stayInMenu = true;
+	do
+	{
+		cout << endl << "Inventory Menu" << endl << endl <<
+			"1) List all items in inventory" << endl <<
+			"2) Display an item in inventory" << endl <<
+			"3) Process order from supplier" << endl <<
+			"4) Generate orders to the suppliers for a given month" << endl <<
+			"5) Find the high demand items for a period of time - month, qtr, yr" << endl <<
+			"6) Exit" << endl <<
+			endl;
+		cin >> option;
 
-	//switch (option)
-	//{
-	//case 1:     // list all items in inventory
-	//		invlist.printInventory();
-	//		break;
-	//case 2:     // display an item in inventory
-	//		ask user for itemid
-	//		Stock& stk = invlist.findItem(itemid)
-	//		stk.printStock()
-	//		break;
-	//case 3:		//process an order from a supplier
-	//		prompt user for filename of order from a supplier
-	//		establish an input file using filename from user
-	//		check if file was able to open
-	//		while more records
-	//			read new item information - itemid, qty
-	//			Stock& stk = invlist.findItem(itemid)
-	//			if stk not emptystock
-	//				stk.incrementQuantity(qty)
-	//			else
-	//				error message
-	//			endif
-	//		end while
-	//		close file
-	//		break;
-	//case 4:		// Generate orders to the suppliers for a given month
-	//		get month and year for order header
-	//		vector<SupplierItem> supplist;
-	//		for each stock in invlist
-	//			if stock.getInStock() < stock.getReorderPoint()
-	//				supplist.push_back(SupplierItem(stock.getSupplierID(),
-	//						stock.getID(), stock.reorderAmount())
-	//			endif
-	//		next
-	//		supplist.sort
-	//		generate report with breaks at supplierID change
-	//		break;			
-	//case 5:		Find the high demand items for a period of time - month, qtr, yr
-	//		vector<pair<string, int>> usage;
-	//		get startdate and enddate
-	//		for each cust in custlist
-	//			for each ord in cust.ordlist
-	//				verify that orderdate is between startdate and enddate
-	//				if so,
-	//					for each orditem in orditemlist
-	//						string itdata = orditem.getItemID()
-	//						auto& itemiter = find(usage.begin(), usage.end(), 
-	//							[itdata](pair<string, int> listel)
-	//								{return (listel.first() == itdata); }
-	//						if itemiter != usage.end() 
-	//							itemiter->second += orditem.getQuant();
-	//						else
-	//							usage.push_back(make_pair(orditem.getItemID(), orditem.getQuant())
-	//						endif
-	//					next
-	//				endif
-	//			next
-	//		next
-	//						
-	//}
-//}
+		switch (option)
+		{
+			//case 1:     // list all items in inventory
+			//		invlist.printInventory();
+			//		break;
+			//case 2:     // display an item in inventory
+			//		ask user for itemid
+			//		Stock& stk = invlist.findItem(itemid)
+			//		stk.printStock()
+			//		break;
+			//case 3:		//process an order from a supplier
+			//		prompt user for filename of order from a supplier
+			//		establish an input file using filename from user
+			//		check if file was able to open
+			//		while more records
+			//			read new item information - itemid, qty
+			//			Stock& stk = invlist.findItem(itemid)
+			//			if stk not emptystock
+			//				stk.incrementQuantity(qty)
+			//			else
+			//				error message
+			//			endif
+			//		end while
+			//		close file
+			//		break;
+			//case 4:		// Generate orders to the suppliers for a given month
+			//		get month and year for order header
+			//		vector<SupplierItem> supplist;
+			//		for each stock in invlist
+			//			if stock.getInStock() < stock.getReorderPoint()
+			//				supplist.push_back(SupplierItem(stock.getSupplierID(),
+			//						stock.getID(), stock.reorderAmount())
+			//			endif
+			//		next
+			//		supplist.sort
+			//		generate report with breaks at supplierID change
+			//		break;			
+			//case 5:		Find the high demand items for a period of time - month, qtr, yr
+			//		vector<pair<string, int>> usage;
+			//		get startdate and enddate
+			//		for each cust in custlist
+			//			for each ord in cust.ordlist
+			//				verify that orderdate is between startdate and enddate
+			//				if so,
+			//					for each orditem in orditemlist
+			//						string itdata = orditem.getItemID()
+			//						auto& itemiter = find(usage.begin(), usage.end(), 
+			//							[itdata](pair<string, int> listel)
+			//								{return (listel.first() == itdata); }
+			//						if itemiter != usage.end() 
+			//							itemiter->second += orditem.getQuant();
+			//						else
+			//							usage.push_back(make_pair(orditem.getItemID(), orditem.getQuant())
+			//						endif
+			//					next
+			//				endif
+			//			next
+			//		next
+			//
+		case 6:
+			stayInMenu = false;
+			break;
+		default:
+			cout << "Invalid Option \"" << option << "\"" << endl;
+			break;
+		}
+	} while (stayInMenu);
+}
 
 void UI::addOrderData(Order &newOrder)
 {
