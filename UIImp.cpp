@@ -257,15 +257,10 @@ void UI::orderMenu()
 					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
 				}
 			} while (notValidCustomer);
-
-
-			// if iterator not = customer list end
-			//		(*iterator) invoke method printOrders()
-			// else
-			//		customerid not found
 			break;
+
 		case 2:     // list all orders for all customers
-					// use for range loop to retrieve each customer
+			// use for range loop to retrieve each customer
 			for (CustomerType customer : totalCustomers)
 			{
 				// for current customer invoke printOrders() method
@@ -273,10 +268,11 @@ void UI::orderMenu()
 			}
 
 			break;
+
 		case 3:		// add an order for a customer
-					//customerListprint;
+			//customerListprint;
 			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;//customerListprint;
+			cout << totalCustomers << endl;
 			do
 			{
 				cout << "Enter customer ID: ";
@@ -292,25 +288,48 @@ void UI::orderMenu()
 					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
 				}
 			} while (notValidCustomer);
-			// Customer& cust = custlist.getcustomer(custID)
-			// if cust != emptyCustomer
-			//		invoke addOrderData(cust)
-			// else
-			//		customerid not found
 			break;
+
 		case 4:		// cancel order
-					//customerListprint;
-			cin >> custID;
-			// Customer& cust = custlist.getcustomer(custID)
-			// if cust != emptyCustomer
-			//		get orderid and canceldate
-			//		if (*iterator).findOrder(orderid) is true
-			//			(*iterator).removeOrder(orderid)
-			//		else
-			//			error message
-			//		endif	
-			// else
-			//		customerid not found
+			//customerListprint;
+			cout << "Current customers:" << endl;
+			cout << totalCustomers << endl;
+			do
+			{
+				cout << "Enter customer ID: ";
+				cin >> custID;
+				if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+					notValidCustomer = false;
+					CustomerType customer = totalCustomers.getCustomer(custID);
+					cout << "Orders for customer " << customer.getId() << " : "<< customer.getName() << endl;
+					cout << customer.printOrders() << endl;
+					bool invalidOrder = true;
+					string orderID;
+					do
+					{
+						cout << "Enter order number to cancel: ";
+						cin >> orderID;
+						if (customer.findOrder(orderID))
+						{
+							invalidOrder = false;
+							customer.removeOrder(orderID);
+							cout << "Order " << orderID << " removed from customers order list." << endl;
+						}
+						else
+						{
+							cout << "ERROR: Invalid order ID entered." << endl;
+							cout << "Please Re-";
+						}
+
+					} while (true);
+				}
+				else {
+					notValidCustomer = true;
+					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+				}
+			} while (true);
+			break;
+
 		case 5:			// update order
 						//	updateOrderMenu()
 			break;
