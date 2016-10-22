@@ -160,62 +160,6 @@ void UI::orderMenu()
 	string custID;
 	bool notValidCustomer;
 	Order *tempOrder;
-
-	cout << "Order Menu" <<
-		"\n1) List Orders for Customer \n2) Over all orders for all customers \n3) Add order to customer" <<
-		"\n4) Cancel order for a customer \n5) Update order for a customer \n";
-	cin >> option;
-
-	switch (option)
-	{
-	case 1:     // list orders for a customer
-		cout << "Current customers:" << endl;
-		cout << totalCustomers << endl;//customerListprint;
-		do
-		{
-			cout << "Enter customer ID: "; 
-			cin >> custID;
-			if (totalCustomers.findCustomer(custID)) { // iterator = find customer
-				notValidCustomer = false;
-				cout << totalCustomers.getOrders(totalCustomers.getCustomer(custID)) << endl;
-			}else {
-				notValidCustomer = true;
-				cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
-			}
-		} while (notValidCustomer);
-		
-		
-		// if iterator not = customer list end
-		//		(*iterator) invoke method printOrders()
-		// else
-		//		customerid not found
-		break;
-	case 2:     // list all orders for all customers
-				// use for range loop to retrieve each customer
-				//		for current customer invoke printOrders() method
-				// end loop
-
-		break;
-	case 3:		// add an order for a customer
-				//customerListprint;
-		cout << "Current customers:" << endl;
-		cout << totalCustomers << endl;//customerListprint;
-		do
-		{
-			cout << "Enter customer ID: ";
-			cin >> custID;
-			if (totalCustomers.findCustomer(custID)) { // iterator = find customer
-				notValidCustomer = false;
-				tempOrder = new Order();
-				addOrderData(*tempOrder);
-
-
-void UI::orderMenu()
-{
-	int option;
-	string custID;
-	bool notValidCustomer;
-	Order *tempOrder;
 	bool stayInMenu = true;
 	
 	do
@@ -292,6 +236,7 @@ void UI::orderMenu()
 
 		case 4:		// cancel order
 			//customerListprint;
+
 			cout << "Current customers:" << endl;
 			cout << totalCustomers << endl;
 			do
@@ -317,17 +262,18 @@ void UI::orderMenu()
 						}
 						else
 						{
+							invalidOrder = true;
 							cout << "ERROR: Invalid order ID entered." << endl;
 							cout << "Please Re-";
 						}
 
-					} while (true);
+					} while (invalidOrder);
 				}
 				else {
 					notValidCustomer = true;
 					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
 				}
-			} while (true);
+			} while (notValidCustomer);
 			break;
 
 		case 5:			// update order
@@ -344,8 +290,8 @@ void UI::orderMenu()
 	} while (stayInMenu);
 }
 
-void UI::invMenu()
-{
+//void UI::invMenu()
+//{
 	//int option, custID;
 	//cout << "Order Menu" <<
 	//	"1) List all items in inventory" << endl <<
@@ -416,7 +362,7 @@ void UI::invMenu()
 	//		next
 	//						
 	//}
-}
+//}
 
 void UI::addOrderData(Order &newOrder)
 {
@@ -427,6 +373,7 @@ void UI::addOrderData(Order &newOrder)
 	orderItem *tempItem;
 	cout << "\nEnter Order Id: ";
 	// Validate Order ID here ???
+	// It would not hurt to...
 	cin >> ordId;
 	cout << "\nEnter Order Date Ex: 1/1/1990: ";
 	cin >> ordDateString;

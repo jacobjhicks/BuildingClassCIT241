@@ -19,7 +19,7 @@ public:
 	std::string getID();
 	int getInStock();
 	int getReorderPoint();
-	Stock& Stock::operator =(const std::string);
+	//Stock& Stock::operator =(const Stock &S); Broken and I don't feel like fixing it...
 };
 
 class Inventory {

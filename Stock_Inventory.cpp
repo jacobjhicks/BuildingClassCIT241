@@ -11,14 +11,14 @@ void Inventory::checkForLow() {
 	}
 }
 
-Stock& Stock::operator =(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
-	id = S.id;
-	desc = S.desc;
-	quantity = S.quantity;
-	inStock = S.inStock;
-	supplierId = S.supplierId;
-	reorderPoint = S.reorderPoint;
-}
+//Stock& Stock::operator =(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
+//	id = S.id; Broken and I don't feel like fixing it...
+//	desc = S.desc;
+//	quantity = S.quantity;
+//	inStock = S.inStock;
+//	supplierId = S.supplierId;
+//	reorderPoint = S.reorderPoint;
+//}
 
 //orderItem Inventory::checkIfInStock(std::string id, int quantity) {
 //	for (int x = 0; x < stocks.size(); x++) {
