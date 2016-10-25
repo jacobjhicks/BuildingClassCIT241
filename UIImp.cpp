@@ -297,30 +297,111 @@ void UI::invMenu()
 	bool stayInMenu = true;
 	do
 	{
-		cout << endl << "Inventory Menu" << endl << endl <<
-			"1) List all items in inventory" << endl <<
-			"2) Display an item in inventory" << endl <<
-			"3) Process order from supplier" << endl <<
-			"4) Generate orders to the suppliers for a given month" << endl <<
-			"5) Find the high demand items for a period of time - month, qtr, yr" << endl <<
-			"6) Exit" << endl <<
-			endl;
-		cin >> option;
+		do
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << endl << "Inventory Menu" << endl;
+			cout << "1) List all items in inventory" << endl;
+			cout << "2) Display an item in inventory" << endl;
+			cout << "3) Process order from supplier" << endl;
+			cout << "4) Generate orders to the suppliers for a given month" << endl;
+			cout << "5) Find the high demand items for a period of time - month, qtr, yr" << endl;
+			cout << "6) Exit" << endl;
+			cin >> option;
+
+			if (!cin)
+			{
+				cout << endl;
+				cout << "Invalid option entered. Please try again." << endl;
+				cout << endl;
+			}
+
+		} while (!cin);
 
 		switch (option)
 		{
-			//case 1:     // list all items in inventory
-			//		invlist.printInventory();
-			//		break;
-			//case 2:     // display an item in inventory
-			//		ask user for itemid
-			//		Stock& stk = invlist.findItem(itemid)
-			//		stk.printStock()
-			//		break;
-			//case 3:		//process an order from a supplier
-			//		prompt user for filename of order from a supplier
-			//		establish an input file using filename from user
-			//		check if file was able to open
+		case 1:     // list all items in inventory
+		{
+			// totalInventory.print();
+			break;
+		}
+		case 2:     // display an item in inventory
+		{
+			bool invalidItem;
+			string itemID;
+			do
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+				//	ask user for itemid
+				cout << "Enter the id of the item you would to display: ";
+				cin >> itemID;
+				if (totalInventory.itemExists(itemID))
+				{
+					invalidItem = false;
+					Stock& itemStock = totalInventory.findItem(itemID);
+					// cout << itemStock << endl;							// Can't print item information yet.
+				}
+				else
+				{
+					invalidItem = true;
+					cout << "ERROR: Invalid item ID entered." << endl;
+					cout << "Please Re-";
+				}
+			} while (!invalidItem);
+			break;
+		}
+		case 3:		//process an order from a supplier
+		{
+			bool cancelOpenFile = false;
+			ofstream orderFile;
+			do
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+				string fileName;
+				// prompt user for filename of order from a supplier
+				cout << "Enter the name of the order file (or EXIT to go back): ";
+				cin >> fileName;
+				stringstream exitCheck;
+				for (char c : fileName)
+					exitCheck << toupper(c);
+
+				// Exit open file
+				if (exitCheck.str() == "EXIT")
+				{
+					cancelOpenFile = true;
+					break;
+				}
+
+				// establish an input file using filename from user
+				orderFile.open(fileName);		// or maybe have a directory for it: orderFile.open($ordersDirectoryNameVariable + "\\" + fileName );
+
+				// check if file was unable to open
+				if (orderFile.fail())
+				{
+					cout << "File not found. Please Re-";
+				}
+			} while (orderFile.fail());
+
+			// if user wants to EXIT...
+			if (cancelOpenFile)
+			{
+				orderFile.close();
+				break;
+			}
+
+			/* FILE ASSUMPTIONS 
+			[customer id]
+			[order id]
+			[item id] [quantitiy]
+			[item id] [quantitiy]
+			...
+			*/
+
 			//		while more records
 			//			read new item information - itemid, qty
 			//			Stock& stk = invlist.findItem(itemid)
@@ -330,9 +411,13 @@ void UI::invMenu()
 			//				error message
 			//			endif
 			//		end while
-			//		close file
-			//		break;
-			//case 4:		// Generate orders to the suppliers for a given month
+			// close file
+			orderFile.close();
+
+			break;
+		}
+		case 4:		// Generate orders to the suppliers for a given month
+		{
 			//		get month and year for order header
 			//		vector<SupplierItem> supplist;
 			//		for each stock in invlist
@@ -343,8 +428,10 @@ void UI::invMenu()
 			//		next
 			//		supplist.sort
 			//		generate report with breaks at supplierID change
-			//		break;			
-			//case 5:		Find the high demand items for a period of time - month, qtr, yr
+			break;			
+		}
+		case 5:		//Find the high demand items for a period of time - month, qtr, yr
+		{
 			//		vector<pair<string, int>> usage;
 			//		get startdate and enddate
 			//		for each cust in custlist
@@ -365,13 +452,18 @@ void UI::invMenu()
 			//				endif
 			//			next
 			//		next
-			//
+			break;
+		}
 		case 6:
+		{
 			stayInMenu = false;
 			break;
+		}
 		default:
+		{
 			cout << "Invalid Option \"" << option << "\"" << endl;
 			break;
+		}
 		}
 	} while (stayInMenu);
 }
