@@ -11,6 +11,17 @@ void Inventory::checkForLow() {
 	}
 }
 
+bool Inventory::itemExists(std::string itemID)
+{
+	for (Stock item : stocks)
+	{
+		if (item.getID == itemID)
+			return true;
+	}
+
+	return false;
+}
+
 //Stock& Stock::operator =(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
 //	id = S.id; Broken and I don't feel like fixing it...
 //	desc = S.desc;

@@ -31,6 +31,7 @@ public:
 public:
 	std::vector<std::string> Inventory::outputList();
 	void Inventory::checkForLow();
+	bool itemExists(std::string itemID);
 	Stock& Inventory::findItem(std::string id);
 	void Inventory::createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint);
 	orderItem Inventory::checkIfInStock(std::string id, int quantity);
