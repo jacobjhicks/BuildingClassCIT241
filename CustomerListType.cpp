@@ -4,7 +4,92 @@
 
 CustomerListType::CustomerListType()
 {
+	vector<string> input;
+	ifstream inDat("CustData.txt");
+	if (!inDat)
+	{
+		cout << "CustData.txt Not Found" << endl;
+	}
+	else
+	{
+		while (!inDat.eof())
+		{
+			string a;
+			getline(inDat, a, '\n');
+			input.push_back(a);
+		}
+	}
+	inDat.close();
 
+	CustomerType CustHolder;
+	Order OrderHolder;
+
+	for (auto b = input.begin(); b != input.end(); ++b)
+	{
+		string j;
+		istringstream iss{ *b };
+		getline(iss, j, '|');
+		if (j == "C")
+		{
+
+			customers.push_back(CustHolder);
+			string f, g, h;
+			getline(iss, f, '|');
+			getline(iss, g, '|');
+			getline(iss, h, '|');
+			CustomerType hold(f, g, h);
+			CustHolder = hold;
+		}
+		if (j == "O")
+		{
+			string f, g, h;
+			if (OrderHolder.getOrderID() == "")
+			{
+			}
+			else
+			{
+				CustHolder.addOrder(OrderHolder);
+			}
+			getline(iss, f, '|');
+			getline(iss, g, '|');
+			getline(iss, h, '|');
+			Date y(g);
+			Date z(h);
+			Order hold(f, y, z);
+			OrderHolder = hold;
+		}
+		if (j == "I")
+		{
+			string f, g, i, k;
+			int y;
+			double z;
+
+			getline(iss, f, '|');
+			getline(iss, g, '|');
+			getline(iss, i, '|');
+			getline(iss, k, '|');
+
+			try
+			{
+				y = stoi(i);
+				z = stod(k);
+			}
+			catch (exception)
+			{
+				system("CLS");
+				cerr << "Error: Exception " << current_exception << " thrown." << endl
+					<< "Invalid input for OrderItem object." << endl
+					<< "Exiting Program" << endl;
+				system("pause");
+				exit(1);
+			}
+			orderItem hold(f, g, y, z);
+			OrderHolder.addOrderItem(hold);
+		}
+	}
+
+	CustHolder.addOrder(OrderHolder);
+	customers.push_back(CustHolder);
 }
 
 

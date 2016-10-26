@@ -2,9 +2,13 @@
 
 #include <iomanip>
 #include <list>
+#include <fstream>
+#include <string>
 
 #include "CustomerType.h"
+#include "Date.h"
 #include "Order.h"
+
 class CustomerListType
 {
 	friend ostream& operator<<(ostream& out, CustomerListType & rightConstmerList);
