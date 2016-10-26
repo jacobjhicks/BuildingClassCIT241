@@ -1,5 +1,10 @@
+//S
 // #include "stdafx.h"
 #include "Stock_Inventory.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 void Inventory::checkForLow() {
 	std::vector <std::pair<std::string, int>> list;
@@ -10,42 +15,21 @@ void Inventory::checkForLow() {
 		}
 	}
 }
-
-bool Inventory::itemExists(std::string itemID)
-{
-	for (Stock item : stocks)
-	{
-		if (item.getID() == itemID)
-			return true;
+Stock& Stock::operator =(const std::string temp) {
+	return stringToStock(temp);
+}
+orderItem Inventory::checkIfInStock(std::string id, int quantity) {
+	for (int x = 0; x < stocks.size(); x++) {
+		if (stocks[x].id == id) {
+			if (stocks[x].quantity >= quantity) {
+				stocks[x].quantity -= quantity;
+			}
+			else {
+				checkForLow();
+			}
+		}
 	}
-
-	return false;
 }
-
-Stock& Stock::operator =(const Stock &S) { // Implemented, It just needed me to return it as a pointer
-	id = S.id; 
-	desc = S.desc;
-	quantity = S.quantity;
-	inStock = S.inStock;
-	supplierId = S.supplierId;
-	reorderPoint = S.reorderPoint;
-	return *this;
-}
-
-//orderItem Inventory::checkIfInStock(std::string id, int quantity) {
-//	for (int x = 0; x < stocks.size(); x++) {
-//		if (stocks[x].id == id) {
-//			if (stocks[x].quantity >= quantity) {
-//				stocks[x].quantity -= quantity;
-//			}
-//			else {
-//				checkForLow();
-//			}
-//		}
-//	}
-//  // Must return an orderItem to compile
-//	TODO: return orderItem or throw exception("message"); ???
-//}
 
 Stock& Inventory::findItem(std::string id) {
 	for (int x = 0; x < stocks.size(); x++) {
@@ -53,14 +37,12 @@ Stock& Inventory::findItem(std::string id) {
 			return stocks[x];
 		}
 	}
-
-	// TODO: return Stock or throw exception("message"); ???
 }
 
 void Inventory::createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint) {
 	Stock s;
 	std::ofstream stream;
-	// sets an Stock equal to the parameters 
+
 	s.id = id;
 	s.desc = desc;
 	s.quantity = quantity;
@@ -78,69 +60,41 @@ void Inventory::createItem(std::string id, std::string desc, int quantity, int i
 	stream << quantity + '\n';
 	stream << inStock + '\n';
 	stream << supplierId + '\n';
-	stream << reorderPoint + '\n'; //This prints out in new lines in a file named after it's ID , probablly needs to be changed to prof. North's criteria 
+	stream << reorderPoint + '\n';
 }
 
 Stock stringToStock(std::string s) {
-	Stock stockItem;
-
-	int temp = 0;
-
+	Stock rip;
+	int harambe = 0;
 	std::vector<std::string> vars;
-
 	for (int x = 0; x < 6; x++) {
-
-		vars[x] = s.substr(temp, s.find('\n', x));
-
-		temp = s.find('\n', x) + 1; // This line produces a warning, 
-									// size_t find (char c, size_t pos = 0) const noexcept;
-									//	Return Value:
-									//	The position of the first character of the first match.
-									//	If no matches were found, the function returns string::npos.
-								// This is because It's checking for new lines. But I think I need to recode it so It looks for the | instead of a new line.
-
+		vars[x] = s.substr(harambe, s.find('\n', x));
+		harambe = s.find('\n', x) + 1;
 	}
-
-	stockItem.id = vars[0];
-
-	stockItem.desc = vars[1];
-
-	stockItem.quantity = std::stoi(vars[2]);
-
-	stockItem.inStock = std::stoi(vars[3]);
-
-	stockItem.supplierId = vars[4];
-
-	stockItem.reorderPoint = std::stoi(vars[5]); // This is setting the items = to there place in a vector of stoi IDK if it works, but it will definetly compile
-
-	return stockItem;
+	rip.id = vars[0];
+	rip.desc = vars[1];
+	rip.quantity = std::stoi(vars[2]);
+	rip.inStock = std::stoi(vars[3]);
+	rip.supplierId = vars[4];
+	rip.reorderPoint = std::stoi(vars[5]);
+	return rip;
 }
 
 std::vector<std::string> Inventory::outputList() {
 	std::ifstream stream;
-
 	std::string line;
-
 	std::vector<std::string> list;
-
 	stream.open("products.txt"); // list of files to load
-
 	while (std::getline(stream, line)) {
-
 		stream.close();
 		stream.open("products/" + line + ".txt"); // files with all the information about stuff
-
 		while (stream.is_open()) {
 			std::string agam = "";
 			while (std::getline(stream, line)) {
 				std::cout << line << std::endl;
 				agam += line + '\n';
 			}
-			// TODO: This line causes a compiler error
-			// list.emplace_back(stringToStock(agam));
-				// list is a vector<string>
-				// stringToStock() returns a Stock object
-			
+			list.emplace_back(stringToStock(agam));
 			agam = "";
 			stream.close();
 		}

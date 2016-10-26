@@ -1,4 +1,4 @@
- #pragma once
+#pragma once
 #include "orderItem.h"
 #include <fstream>
 #include <iostream>
@@ -19,7 +19,7 @@ public:
 	std::string getID();
 	int getInStock();
 	int getReorderPoint();
-	Stock& Stock::operator =(const Stock &S); 
+	Stock& Stock::operator =(const std::string);
 };
 
 class Inventory {
@@ -31,7 +31,6 @@ public:
 public:
 	std::vector<std::string> Inventory::outputList();
 	void Inventory::checkForLow();
-	bool itemExists(std::string itemID);
 	Stock& Inventory::findItem(std::string id);
 	void Inventory::createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint);
 	orderItem Inventory::checkIfInStock(std::string id, int quantity);
@@ -47,5 +46,3 @@ public:
 //		SupplierItem() = default;
 //		SupplierItem(s suppid, s itemID, i amt);
 //};
-
-Stock stringToStock(std::string s); // Had to add definition
