@@ -30,10 +30,16 @@
     <ClInclude Include="orderItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stock_Inventory.h">
+    <ClInclude Include="Ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ui.h">
+    <ClInclude Include="Stock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplierItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,13 +62,19 @@
     <ClCompile Include="orderItemOrder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Stock_Inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIImp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Maincpp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplierItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

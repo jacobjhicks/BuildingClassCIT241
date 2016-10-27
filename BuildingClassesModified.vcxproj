@@ -145,20 +145,24 @@
     <ClInclude Include="CustomerListType.h" />
     <ClInclude Include="CustomerType.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="orderItem.h" />
-    <ClInclude Include="Stock_Inventory.h" />
+    <ClInclude Include="Stock.h" />
+    <ClInclude Include="SupplierItem.h" />
     <ClInclude Include="Ui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomerListType.cpp" />
     <ClCompile Include="CustomerType.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Maincpp.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="orderItem.cpp" />
     <ClCompile Include="orderItemOrder.cpp" />
-    <ClCompile Include="Stock_Inventory.cpp" />
+    <ClCompile Include="Stock.cpp" />
+    <ClCompile Include="SupplierItem.cpp" />
     <ClCompile Include="UIImp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
