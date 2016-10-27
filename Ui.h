@@ -5,8 +5,11 @@
 #include <string>
 #include <regex>
 #include "CustomerListType.h"
-#include "Stock_Inventory.h"
-#include"Order.h"
+#include "Stock.h"
+#include "Inventory.h"
+#include "SupplierItem.h"
+#include "Order.h"
+#include "orderItem.h"
 
 using namespace std;
 
