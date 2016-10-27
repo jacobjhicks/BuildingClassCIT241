@@ -164,6 +164,7 @@
     <ClCompile Include="Stock.cpp" />
     <ClCompile Include="SupplierItem.cpp" />
     <ClCompile Include="UIImp.cpp" />
+    <ClCompile Include="UIImp2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,17 +1,15 @@
 #include "Ui.h"
-#include "Date.h"
-#include "Order.h"
-#include <iostream>
-#include <string>
 
 UI::UI()
 {
 	// invlist.load stocks into inventory
+	totalInventory.load();
 }
 
 UI::~UI()
 {
 	// write stocks from inventory into file
+	totalInventory.write();
 }
 
 void UI::mainMenu()
