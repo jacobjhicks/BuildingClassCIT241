@@ -321,7 +321,9 @@ void UI::invMenu()
 		{
 		case 1:     // list all items in inventory
 		{
-			// totalInventory.print();
+			system("CLS");
+			cout << "All Items in Inventory: " << endl;
+			cout << totalInventory << endl;
 			break;
 		}
 		case 2:     // display an item in inventory
@@ -350,6 +352,29 @@ void UI::invMenu()
 				}
 			} while (!invalidItem);
 			break;
+
+				//
+				// The other implementation of Case 2:
+				//
+			//system("CLS");
+			//std::string idIn;
+			//cout << "Display Inventory Item Procedure" << endl;
+			//cout << "What is the itemID of the Item you're looking for?" << endl;
+			//cin >> idIn;
+			//Stock& stk = totalInventory.findItem(idIn);
+			//Stock hold;
+			//if (stk == hold)
+			//{
+			//	cout << "ItemID Not found. Item " << idIn << " not in Inventory." << endl;
+			//}
+			//else
+			//{
+			//	system("CLS");
+
+			//	cout << "Item Found: " << stk << endl;
+			//}
+			//break;
+
 		}
 		case 3:		//process an order from a supplier
 		{
@@ -413,20 +438,168 @@ void UI::invMenu()
 			orderFile.close();
 
 			break;
+
+				//
+				// The other implementation of Case 3:
+				//
+			//cout << "Process Supplier Order" << endl;
+			////prompt user for filename of order from a supplier
+			////establish an input file using filename from user
+			//ifstream FL("fileList.txt");
+			//if (!FL)
+			//{
+			//	cout << "fileList.txt not found" << endl;
+			//}
+			//else
+			//{
+			//	while (!FL.eof())
+			//	{
+			//		string a;
+			//		getline(FL, a, '\n');
+			//		cout << a << endl;
+			//	}
+			//}
+			//FL.close();
+			//string file, a;
+			//ifstream inDat;
+			//cout << "Please enter the Supplier file name" << endl;
+			//cin.ignore(10000, '\n');
+			//getline(cin, file);
+			////check if file was able to open
+			//inDat.open(file);
+			//if (!inDat)
+			//{
+			//	cout << "Unable to open file " << file << ". File not found." << endl;
+			//}
+			//else
+			//{
+			//	cout << "Processing File" << endl;
+			//	getline(inDat, a, '\n');
+			//	while (!inDat.eof())
+			//	{
+			//		string itemID, qtyStr;
+			//		int qty;
+			//		getline(inDat, itemID, '|');
+			//		getline(inDat, qtyStr, '\n');
+			//		if (qtyStr == "")
+			//		{
+			//		}
+			//		else
+			//		{
+			//			try
+			//			{
+			//				qty = stoi(qtyStr);
+			//			}
+			//			catch (exception)
+			//			{
+			//				system("CLS");
+			//				cerr << "Load Error: Exception " << current_exception << " thrown." << endl
+			//					<< "Invalid Quantity input from " << file << " file" << endl
+			//					<< "Exiting Program" << endl;
+			//				system("pause");
+			//				exit(1);
+			//			}
+			//		}
+			//		Stock test;
+			//		Stock& stk = totalInventory.findItem(itemID);
+			//		if (stk == test)
+			//		{
+			//			system("CLS");
+			//			cerr << "Load Error: Exception " << current_exception << " thrown." << endl
+			//				<< "Invalid ItemID input from " << file << " file" << endl
+			//				<< "Exiting Program" << endl;
+			//			system("pause");
+			//			exit(1);
+			//		}
+			//		else
+			//		{
+
+			//			stk.incrementQuantity(qty);
+			//		}
+			//	}
+			//	cout << "File Processed" << endl;
+			//	inDat.close();
+			//}
+			//break;
 		}
 		case 4:		// Generate orders to the suppliers for a given month
 		{
-			//		get month and year for order header
-			//		vector<SupplierItem> supplist;
-			//		for each stock in invlist
-			//			if stock.getInStock() < stock.getReorderPoint()
-			//				supplist.push_back(SupplierItem(stock.getSupplierID(),
-			//						stock.getID(), stock.reorderAmount())
-			//			endif
-			//		next
-			//		supplist.sort
-			//		generate report with breaks at supplierID change
-			break;			
+			cout << "Orders for a month Procedure" << endl;
+			string a, b, y;
+			cin.ignore(10000, '\n');
+			cout << "What is the month for the Order Header?" << endl;
+			getline(cin, a);
+			cout << "What is the Year for the order header?" << endl;
+			getline(cin, b);
+			//get month and year for order header
+			//vector<SupplierItem> supplist;
+			vector<SupplierItem> supplist;
+			list<string> suppMas;
+
+			for (auto c = totalInventory.stocks.begin(); c != totalInventory.stocks.end(); ++c)
+			{
+				if ((*c).getInStock() < (*c).getReorderPoint())
+				{
+					suppMas.push_back((*c).getSupplierID());
+					supplist.push_back(SupplierItem((*c).getSupplierID(), (*c).getID(), (*c).getReorderAmount()));
+				}
+			}
+
+
+
+			for (auto j = supplist.begin(); j != supplist.end(); ++j)
+			{
+
+				cout << (*j).getiID() << "|" << (*j).getAmount() << endl;
+			}
+
+			suppMas.unique();
+			sort(supplist.begin(), supplist.end());
+
+			for (auto u = suppMas.begin(); u != suppMas.end(); ++u)
+			{
+				stringstream filename;
+				filename << *u << a << "-" << b << ".txt";
+				y = filename.str();
+				ofstream outData(y.c_str());
+				if (!outData)
+				{
+					cout << "File " << filename.str() << " not created." << endl;
+				}
+				else
+				{
+					outData << "Supplier " << *u << " Order: " << a << "/" << b << endl;
+					for (auto d = supplist.begin(); d != supplist.end(); ++d)
+					{
+						if ((*d).getSupp() == *u)
+						{
+							outData << (*d).getiID() << "|" << (*d).getAmount() << endl;
+						}
+					}
+					outData.close();
+					cout << "File " << y << " created" << endl;
+					ofstream upD("fileList.txt", ios::app);
+					if (!upD)
+					{
+						cout << "fileList.txt not found." << endl;
+					}
+					else
+					{
+						upD << y << endl;
+					}
+					upD.close();
+					// for each stock in invlist
+					// if stock.getInStock() < stock.getReorderPoint()
+					// supplist.push_back(SupplierItem(stock.getSupplierID(),
+					// stock.getID(), stock.reorderAmount())
+					// endif
+					// next
+					// supplist.sort
+					// generate report with breaks at supplierID change
+				}
+			}
+			cout << "Processing Complete" << endl;
+			break;
 		}
 		case 5:		//Find the high demand items for a period of time - month, qtr, yr
 		{
