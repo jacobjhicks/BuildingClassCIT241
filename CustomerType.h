@@ -32,6 +32,8 @@ public:
 	string printOrders();
 	string printOrderIds();
 
+	string write();
+
 private:
 	string custId;
 	string name;

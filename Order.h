@@ -28,6 +28,7 @@ public:
 	Date getOrderDate();
 	Date getDeliveryDate();
 	// orderitem& findOrderItem(string itemid);
+	string write();
 
 private:
 	string orderID;

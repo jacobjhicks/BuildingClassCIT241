@@ -1,6 +1,4 @@
 #include "orderItem.h"
-#include <iostream>
-#include <iomanip>
 
 using namespace std;
 
@@ -16,6 +14,15 @@ orderItem::~orderItem()
 
 orderItem::orderItem(string a, string b, int c, double d): itemID(a), itemDesc(b), quantity(c), price(c)
 {
+}
+
+string orderItem::write()
+{
+	stringstream out;
+
+	out << "I|" << itemID << "|" << itemDesc << "|" << quantity << "|" << price << endl;
+
+	return out.str();
 }
 
 ostream& operator<<(ostream& os, const orderItem& rig)

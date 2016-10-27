@@ -1,10 +1,17 @@
 #include "Order.h"
-#include "orderItem.h"
 
 
 Order::Order()
 {
 }
+
+//Order::Order()
+//{
+//	orderID = " ";
+//	Date hold;
+//	orderDate = hold;
+//	deliveryDate = hold;
+//}
 
 Order::Order(string orderID, Date orderDate, Date deliveryDate)
 {
@@ -94,6 +101,20 @@ bool Order::isOrder(string inStr)
 	else
 		return false;
 
+}
+
+string Order::write()
+{
+	stringstream out;
+
+	out << "O|" << orderID << "|" << orderDate.dateString() << "|" << deliveryDate.dateString() << endl;
+
+	for (orderItem item : orderItems)
+	{
+		out << item.write();
+	}
+
+	return out.str();
 }
 
 bool Order::operator==(Order& rhs)

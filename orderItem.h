@@ -1,5 +1,8 @@
 #pragma once
+#include <iostream>
+#include <iomanip>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -31,6 +34,7 @@ public:
 
 	//function
 	double getItemTotal() { return quantity * price; }
+	string write();
 
 	// void incrementQuantity(int qty);
 

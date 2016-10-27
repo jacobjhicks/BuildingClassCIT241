@@ -162,6 +162,25 @@ string CustomerType::printOrderIds()
 }
 
 /**
+* Returns a string object of all the order numbers, all on one line
+* Example:
+* "OK123|My Name|my.email@example.com|"
+* "OR123...order stuff"
+* "OR123...order stuff"
+*/
+string CustomerType::write()
+{
+	stringstream out;
+	out << "C|" << custId << "|" << name << "|" << email << endl;
+	for (Order order : orders)
+	{
+		out << order.write();
+	}
+
+	return out.str();
+}
+
+/**
 * Prints the customers details.
 * Example:
 * "OK123       Full Name                         EmailAddress@example.com          "
