@@ -34,11 +34,19 @@ Stock::Stock(string in)
 
 }
 
+<<<<<<< HEAD
 Stock& Stock::operator=(const std::string temp) {
 	return stringToStock(temp);
 }
 
 Stock& Stock::operator=(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
+=======
+Stock& Stock::operator =(const std::string temp) {
+	return stringToStock(temp);
+}
+
+Stock& Stock::operator =(const Stock &S) { // Implemented, when you set something equal, you need to add it to the Stock Vector in the inventory class.
+>>>>>>> 7cdaf8280a02a5ab9d3591937e8a628e28214d77
 	id = S.id;
 	desc = S.desc;
 	price = S.price;
