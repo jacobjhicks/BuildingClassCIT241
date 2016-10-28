@@ -2,28 +2,27 @@
 
 UI::UI()
 {
-	// invlist.load stocks into inventory
-	totalInventory.load();
+	// TODO: load customers into customerList from file
+	totalInventory.load(); // load stocks into inventory from file
 }
 
 UI::~UI()
 {
-	// write stocks from inventory into file
-	totalInventory.write();
+	// TODO: write customers in customerList to file
+	totalInventory.write(); // write stocks in inventory to file
 }
 
 void UI::mainMenu()
 { 
-	bool continueUi = true;
+	bool loopMainMenu = true;
 	do
 	{
 		int option;
 		string customername, customeremail, customerID;
-		bool emailCheck,remCustomerCheck;
-		CustomerType *tempCustomer;
-		bool verifyInput = false;
+		bool remCustomerCheck;
 		cout << string(3, '\n');
 
+		bool verifyInput = false;
 		do
 		{
 			if (verifyInput)
@@ -51,106 +50,36 @@ void UI::mainMenu()
 		switch (option)
 		{
 		case 1:		// add customer
-			do
-			{
-				// Need to get potential new customerID
-				cout << "Enter Customer ID: ";
-				cin >> customerID;
-				// after reading in customerID - see if it already exists
-				if (totalCustomers.findCustomer(customerID))
-				{
-					// if it already exists, warn user and go back to customer menu
-					cout << endl << "Custeromer ID already exists.\nPlease Re-";
-				}
-			} while (totalCustomers.findCustomer(customerID));
-
-			// collect rest of customer information
-
-			cout << "Enter customer name: ";
-			// names are notorious for having spaces in them - must use getline
-			cin.ignore();
-			getline(cin, customername);
-			do
-			{
-				// Need to get potential new customeremail
-				cout << "Enter customer email: ";
-				cin.clear();
-				cin >> customeremail;
-				// After reading in customeremail - check if it is valid
-
-				// Establish a general email pattern
-				// regex emailMatch("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$");
-				// Check the input for the regex pattern
-				// if (regex_match(customeremail, emailMatch))
-
-				int i = customeremail.find('@', 1);
-				if (//customeremail.find('@', 1) == true && // this line produced a Warning
-					customeremail.find('@', 1) != string::npos && // If no matches were found, the function returns string::npos.
-					customeremail.find('.', i + 1) != string::npos &&
-					customeremail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
-				{
-					emailCheck = false;
-				}
-				else
-				{
-					cout << "ERROR: Incorrect email address entered. \nPlease Re-";
-					emailCheck = true;
-				}
-			} while (emailCheck);
-			// build customer and add to customer
-			// customerlist.addCustomer(Customer(----,-----,-----));
-			tempCustomer = new CustomerType(customerID, customername, customeremail);
-			totalCustomers.addCustomer(*tempCustomer);
+			addCustomer();
+			// TODO: Add a cancel option to addCustomer()
 			break;
 		case 2:		// remove customer
-					// you may want to display list of customerIDs so user can choose one
-			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;
-			do
-			{
-				cout << "Enter customer ID you want to delete: ";
-				cin >> customerID;
-				if (totalCustomers.findCustomer(customerID)) {
-					remCustomerCheck = false;
-					totalCustomers.removeCustomer(totalCustomers.getCustomer(customerID));
-				}
-				else
-				{
-					cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
-					remCustomerCheck = true;
-				}
-			} while (remCustomerCheck);
-			// find customer object in customerlist returning iterator pointing to the customer object
-			// if found
-			//		use customer list remove method passing iterator
-			// else
-			//		message to user not found
-
+			removeCustomer();
+			// TODO: Add a cancel option to removeCustomer()
 			break;
 		case 3:		// find customer returning iterator pointing to the customer
 					// you may want to display list of customerIDs so user can choose one
-			cout << "enter customer ID" << endl;
-			cin >> customerID;
-			// CustomerType& cust = custlist.getcustomer(customerID)
+			editCustomer();
+			// TODO: Finish the function???
+			// TODO: Add a cancel option to editCustomer()
 			break;
 		case 4: // list customer information
-			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;
+			listCustomerInformation();
 			break;
-		case 5:  //order menu
+		case 5:  // order menu
 			orderMenu();
 			break;
-		case 6: //inv menu
+		case 6: // inv menu
 			invMenu();
 			break;
-		case 7: //exit
-			continueUi = false;
+		case 7: // exit
+			loopMainMenu = false;
 			break;
 		default:
 			cout << "Invalid option try again";
 			break;
 		}
-	} while (continueUi);
+	} while (loopMainMenu);
 }
 
 void UI::orderMenu()
@@ -185,8 +114,8 @@ void UI::orderMenu()
 		switch (option)
 		{
 		case 1:     // list orders for a customer
-			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;//customerListprint;
+			listCustomerInformation();
+
 			do
 			{
 				cout << "Enter customer ID: ";
@@ -214,8 +143,8 @@ void UI::orderMenu()
 
 		case 3:		// add an order for a customer
 			//customerListprint;
-			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;
+			listCustomerInformation();
+
 			do
 			{
 				cout << "Enter customer ID: ";
@@ -235,9 +164,8 @@ void UI::orderMenu()
 
 		case 4:		// cancel order
 			//customerListprint;
+			listCustomerInformation();
 
-			cout << "Current customers:" << endl;
-			cout << totalCustomers << endl;
 			do
 			{
 				cout << "Enter customer ID: ";
@@ -291,7 +219,7 @@ void UI::orderMenu()
 
 void UI::invMenu()
 {
-	int option, custID;
+	int option;
 	bool stayInMenu = true;
 	do
 	{
@@ -673,6 +601,117 @@ void UI::addOrderData(Order &newOrder)
 			moreItems = false;
 	} while (moreItems);
 	newOrder = tempOrder;
+}
+
+void UI::listCustomerInformation()
+{
+	cout << "Current customers:" << endl;
+	cout << totalCustomers << endl;
+}
+
+void UI::addCustomer()
+{
+	string customerID, customerName, customerEmail;
+
+	do
+	{
+		// Need to get potential new customerID
+		cout << "Enter Customer ID: ";
+		cin >> customerID;
+		// after reading in customerID - see if it already exists
+		if (totalCustomers.findCustomer(customerID))
+		{
+			// if it already exists, warn user and go back to customer menu
+			cout << endl << "Customer ID already exists.\nPlease Re-";
+		}
+	} while (totalCustomers.findCustomer(customerID));
+
+	// collect rest of customer information
+
+	cout << "Enter customer name: ";
+	// names are notorious for having spaces in them - must use getline
+	cin.ignore();
+	getline(cin, customerName);
+
+	bool emailValidated;
+	do
+	{
+		// Need to get potential new customeremail
+		cout << "Enter customer email: ";
+		cin.clear();
+		cin >> customerEmail;
+		// After reading in customeremail - check if it is valid
+
+		// Establish a general email pattern
+		// regex emailMatch("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$");
+		// Check the input for the regex pattern
+		// if (regex_match(customeremail, emailMatch))
+
+		int i = customerEmail.find('@', 1);
+		if (//customeremail.find('@', 1) == true && // this line produced a Warning
+			customerEmail.find('@', 1) != string::npos && // If no matches were found, the function returns string::npos.
+			customerEmail.find('.', i + 1) != string::npos &&
+			customerEmail.back() != '.') //Making sure there is an "@" and a "." afterwards. Characters must follow.
+		{
+			emailValidated = true;
+		}
+		else
+		{
+			cout << endl << "ERROR: Incorrect email address entered. \nPlease Re-";
+			emailValidated = false;
+		}
+	} while ( ! emailValidated);
+
+	// build customer and add to customerList
+	totalCustomers.addCustomer(CustomerType(customerID, customerName, customerEmail));
+}
+
+void UI::removeCustomer()
+{
+	string customerID;
+
+	// you may want to display list of customerIDs so user can choose one
+	listCustomerInformation();
+
+	do
+	{
+		cout << "Enter customer ID you want to delete: ";
+		cin >> customerID;
+		if (totalCustomers.findCustomer(customerID))
+		{
+			totalCustomers.removeCustomer(totalCustomers.getCustomer(customerID));
+			
+			return;
+		}
+
+		cout << endl << "ERROR: Invalid customer ID entered. \nPlease Re-";
+
+	} while (true);
+}
+
+void UI::editCustomer()
+{
+	string customerID;
+
+	// TODO: Finish the function ???
+	listCustomerInformation();
+
+	do
+	{
+
+		cout << "Enter customer ID you want to edit: ";
+		cin >> customerID;
+
+		if (totalCustomers.findCustomer(customerID))
+		{
+			CustomerType & customer = totalCustomers.getCustomer(customerID);
+
+			return;
+		}
+
+		cout << endl << "ERROR: Invalid customer ID entered. \nPlease Re-";
+
+	} while (true);
 }
 
 //void UI::custMenu(int ID)

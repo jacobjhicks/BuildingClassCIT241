@@ -29,5 +29,10 @@ private:
 	void custMenu(int ID);
 	void addOrderData(Order &newOrder);
 	// void updateOrderMenu();
+
+	void listCustomerInformation();
+	void addCustomer();
+	void removeCustomer();
+	void editCustomer();
 };
 
