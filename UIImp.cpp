@@ -702,3 +702,8 @@ void UI::addOrderData(Order &newOrder)
 //			ask if more orderitems
 //		end while when no more order items
 //		cust.addOrder(order object)
+
+
+
+
+// system("CLS");
