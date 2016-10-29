@@ -197,9 +197,6 @@ void UI::editCustomer()
 void UI::orderMenu()
 {
 	int option;
-	string custID;
-	bool notValidCustomer;
-	Order *tempOrder;
 	bool loopOrderMenu = true;
 	
 	do
@@ -422,8 +419,11 @@ void UI::listInventory()
 
 void UI::displayItem()
 {
-	bool invalidItem;
+	bool invalidItem = true;
 	string itemID;
+
+	listInventory();
+
 	do
 	{
 		cin.clear();
@@ -436,42 +436,15 @@ void UI::displayItem()
 		{
 			invalidItem = false;
 			Stock& itemStock = totalInventory.findItem(itemID);
-			// cout << itemStock << endl;							// Can't print item information yet.
+			cout << itemStock << endl;
 		}
 		else
 		{
-			invalidItem = true;
 			cout << "ERROR: Invalid item ID entered." << endl;
 			cout << "Please Re-";
 		}
-	} while (!invalidItem);
+	} while (invalidItem);
 }
-
-	// 
-	// The other implementation of Case 2:
-	// 
-/*
-void UI::displayItem()
-{
-	system("CLS");
-	std::string idIn;
-	cout << "Display Inventory Item Procedure" << endl;
-	cout << "What is the itemID of the Item you're looking for?" << endl;
-	cin >> idIn;
-	Stock& stk = totalInventory.findItem(idIn);
-	Stock hold;
-	if (stk == hold)
-	{
-		cout << "ItemID Not found. Item " << idIn << " not in Inventory." << endl;
-	}
-	else
-	{
-		system("CLS");
-
-		cout << "Item Found: " << stk << endl;
-	}
-}
-*/
 
 void UI::generateOrdersReport()
 {
