@@ -22,17 +22,36 @@ public:
 	void mainMenu();
 
 private:
-	void orderMenu();
-	void invMenu();
-	CustomerListType totalCustomers; // customer list
-	Inventory totalInventory; // inventory list
-	void custMenu(int ID);
-	void addOrderData(Order &newOrder);
-	// void updateOrderMenu();
-
+		// mainMenu switch function.
 	void listCustomerInformation();
 	void addCustomer();
 	void removeCustomer();
 	void editCustomer();
+
+
+	void orderMenu();
+		// orderMenu switch functions
+	void listCustomersOrders();
+	void listAllOrders();
+	void addOrder();
+	void cancelOrder();
+	void updateOrder();
+
+
+	void invMenu();
+		// invMenu switch functions
+	void listInventory();
+	void displayItem();
+	void processOrder();
+	void generateOrdersReport();
+	void generateInventoryReport();
+
+	//void custMenu(int ID);
+	void addOrderData(Order &newOrder);
+	// void updateOrderMenu();
+
+
+	CustomerListType totalCustomers; // customer list
+	Inventory totalInventory; // inventory list
 };
 
