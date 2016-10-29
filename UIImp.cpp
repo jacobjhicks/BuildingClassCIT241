@@ -2,13 +2,11 @@
 
 UI::UI()
 {
-	// TODO: load customers into customerList from file
 	totalInventory.load(); // load stocks into inventory from file
 }
 
 UI::~UI()
 {
-	// TODO: write customers in customerList to file
 	totalInventory.write(); // write stocks in inventory to file
 }
 
@@ -733,6 +731,7 @@ void UI::addOrderData(Order &newOrder)
 	} while (moreItems);
 	newOrder = tempOrder;
 }
+
 
 //void UI::custMenu(int ID)
 //{

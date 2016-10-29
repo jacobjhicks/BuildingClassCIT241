@@ -1,11 +1,12 @@
 #include "CustomerListType.h"
 
-
+using namespace std;
 
 CustomerListType::CustomerListType()
 {
 	vector<string> input;
 	ifstream inDat("CustData.txt");
+	bool notFirstOrder = false;
 	if (!inDat)
 	{
 		cout << "CustData.txt Not Found" << endl;
@@ -29,10 +30,14 @@ CustomerListType::CustomerListType()
 		string j;
 		istringstream iss{ *b };
 		getline(iss, j, '|');
+
+		
+
 		if (j == "C")
 		{
-
+			CustHolder.addOrder(OrderHolder);
 			customers.push_back(CustHolder);
+			notFirstOrder = false;
 			string f, g, h;
 			getline(iss, f, '|');
 			getline(iss, g, '|');
@@ -42,13 +47,17 @@ CustomerListType::CustomerListType()
 		}
 		if (j == "O")
 		{
+			if (notFirstOrder) {
+				CustHolder.addOrder(OrderHolder);
+			}
+			notFirstOrder = true;
 			string f, g, h;
 			if (OrderHolder.getOrderID() == "")
 			{
 			}
 			else
 			{
-				CustHolder.addOrder(OrderHolder);
+				//CustHolder.addOrder(OrderHolder);
 			}
 			getline(iss, f, '|');
 			getline(iss, g, '|');
