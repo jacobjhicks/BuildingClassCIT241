@@ -9,6 +9,7 @@ class Stock {
 public:
 	void printStock();
 	void incrementQuantity(int qty);
+	void decreaseQuantity(int qty);
 	std::string getID();
 	int getInStock();
 	int getReorderPoint();

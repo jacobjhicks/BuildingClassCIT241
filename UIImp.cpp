@@ -744,11 +744,9 @@ void UI::addOrderData(Order &newOrder, string custID)
 			}else{
 				invadItem = true;
 			}
-		} while (invadItem);
-		
-
+		} while (invadItem);		
+		totalInventory.removeStock(itemID, quantity);
 		tempItem = new orderItem(itemID, (totalInventory.getItemDescription(itemID)), quantity, (totalInventory.getItemPrice(itemID)));
-
 		tempOrder.addOrderItem(*tempItem);
 		cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
 		cin >> option;

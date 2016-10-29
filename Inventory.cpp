@@ -75,6 +75,15 @@ double Inventory::getItemPrice(string itemID)
 	}
 }
 
+void Inventory::removeStock(string itemID, int quantity)
+{
+	for (Stock item : stocks)
+	{
+		if (item.getID() == itemID)
+			item.decreaseQuantity(quantity);
+	}
+}
+
 Stock& Inventory::findItem(std::string id) {
 	for (int x = 0; x < stocks.size(); x++) {
 		if (stocks[x].id == id) {

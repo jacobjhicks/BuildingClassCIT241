@@ -1,6 +1,6 @@
-ChB00123|Cherry Bomb Level 1|16.50|73|BigBombs|25
-SpK01879|Base Sparklers|4.50|38|LowCostExplosions|20
-HmH01765|Hammer Head Shower|47.90|27|BigBombs|18
+ChB00123|Cherry Bomb Level 1|16.5|73|BigBombs|25
+SpK01879|Base Sparklers|4.5|38|LowCostExplosions|20
+HmH01765|Hammer Head Shower|47.9|27|BigBombs|18
 ClB02190|Cloud Burst Flower Head|59.35|13|BigBombs|15
 NiF00289|Niagra Falls Disperse|43.58|9|LowCostExplosions|12
 HiS00678|High Intensity Sparklers|10.75|35|BigBombs|20

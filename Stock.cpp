@@ -106,6 +106,11 @@ void Stock::incrementQuantity(int qty) {
 	quantity += qty;
 }
 
+void Stock::decreaseQuantity(int qty)
+{
+	quantity -= qty;
+}
+
 std::string Stock::getID() {
 	return id;
 }
