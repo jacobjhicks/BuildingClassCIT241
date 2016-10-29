@@ -289,7 +289,7 @@ void UI::addOrder()
 		if (totalCustomers.findCustomer(custID)) { // iterator = find customer
 			invalidCustomer = false;
 			Order *tempOrder = new Order();
-			addOrderData(*tempOrder);
+			addOrderData(*tempOrder, custID);
 			totalCustomers.addOrder(totalCustomers.getCustomer(custID), *tempOrder);// - Get oder to pass in
 		}
 		else {
@@ -696,17 +696,27 @@ void UI::processOrder()
 	//		next
 }
 
-void UI::addOrderData(Order &newOrder)
+void UI::addOrderData(Order &newOrder, string custID)
 {
 	string ordId, ordDateString, delDateString, itemID, option;
 	Date ordDate,delDate;
 	int quantity;
-	bool moreItems = true;
+	bool moreItems = true, invadOrderId = false;
 	orderItem *tempItem;
-	cout << "\nEnter Order Id: ";
-	// Validate Order ID here ???
-	// It would not hurt to...
-	cin >> ordId;
+	cout << endl;
+	do
+	{
+		cout << "Enter Order Id: ";
+		cin >> ordId;
+
+		if (totalCustomers.findOrder((totalCustomers.getCustomer(custID)), ordId)) {
+			invadOrderId = true;
+			cout << "ERROR: Invalid item ID entered." << endl;
+			cout << "Please Re-";
+		}else{
+			invadOrderId = false;			
+		}
+	} while (invadOrderId);
 	cout << "\nEnter Order Date Ex: 1/1/1990: ";
 	cin >> ordDateString;
 	ordDate = { ordDateString };

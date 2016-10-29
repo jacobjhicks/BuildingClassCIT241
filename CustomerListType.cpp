@@ -151,6 +151,18 @@ bool CustomerListType::findCustomer(const string & custId)
 	return found != customers.end();
 }
 
+bool CustomerListType::findOrder(CustomerType customer, string OrderID)
+{
+	list<CustomerType>::iterator rmIt;
+	for (rmIt = customers.begin(); rmIt != customers.end(); ++rmIt)
+	{
+		if (customer == *rmIt)
+		{
+			return rmIt->findOrder(OrderID);
+		}
+	}
+}
+
 void CustomerListType::removeCustomer( CustomerType customer)
 {
 	//customers.remove(*customer);

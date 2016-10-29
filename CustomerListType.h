@@ -22,6 +22,7 @@ public:
 	//list<CustomerType>::iterator findCustomerObject(const string& custId);
 	CustomerType & getCustomer(const string & custId);
 	bool findCustomer(const string & custId);
+	bool findOrder(CustomerType customer, string OrderID);
 	void removeCustomer(CustomerType customer);
 	string getOrders(CustomerType customer);
 	void addOrder(CustomerType customer, const Order & order);

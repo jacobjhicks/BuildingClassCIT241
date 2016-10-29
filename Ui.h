@@ -47,7 +47,7 @@ private:
 	void generateInventoryReport();
 
 	//void custMenu(int ID);
-	void addOrderData(Order &newOrder);
+	void addOrderData(Order &newOrder, string custID);
 	// void updateOrderMenu();
 
 
