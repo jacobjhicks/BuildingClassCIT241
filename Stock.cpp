@@ -118,6 +118,16 @@ int Stock::getReorderPoint() {
 	return reorderPoint;
 }
 
+double Stock::getPrice()
+{
+	return price;
+}
+
+string Stock::getDesc()
+{
+	return desc;
+}
+
 void Stock::printStock() {
 	std::cout << std::to_string(inStock) << std::endl;
 }
