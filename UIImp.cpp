@@ -701,7 +701,7 @@ void UI::addOrderData(Order &newOrder, string custID)
 	string ordId, ordDateString, delDateString, itemID, option;
 	Date ordDate,delDate;
 	int quantity;
-	bool moreItems = true, invadOrderId = false;
+	bool moreItems = true, invadOrderId = false, invadItem= false;
 	orderItem *tempItem;
 	cout << endl;
 	do
@@ -727,11 +727,26 @@ void UI::addOrderData(Order &newOrder, string custID)
 	
 	do
 	{
-		cout << "\nEnter Item Id: ";
-		cin >> itemID;
-		cout << "\nEnter quantity: ";
-		cin >> quantity;
+		do
+		{
+			listInventory();
+			if (invadItem)
+			{
+				cout << "ERROR: Invalid item ID entered." << endl;
+				cout << "Please Re-";
+			}
+			cout << "Enter Item Id: ";
+			cin >> itemID;
+			cout << "\nEnter quantity: ";
+			cin >> quantity;
+			if (totalInventory.itemInStock(itemID, quantity)) {
+				invadItem = false;
+			}else{
+				invadItem = true;
+			}
+		} while (invadItem);		
 		tempItem = new orderItem(itemID, quantity);
+
 		tempOrder.addOrderItem(*tempItem);
 		cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
 		cin >> option;

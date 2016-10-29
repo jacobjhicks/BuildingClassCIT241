@@ -45,6 +45,20 @@ bool Inventory::itemExists(std::string itemID)
 	return false;
 }
 
+bool Inventory::itemInStock(std::string itemID, int quantity)
+{
+	for (Stock item : stocks)
+	{
+		if (item.getID() == itemID) {
+			if(item.getInStock() >= quantity)
+				return true;
+		}
+			
+	}
+
+	return false;
+}
+
 Stock& Inventory::findItem(std::string id) {
 	for (int x = 0; x < stocks.size(); x++) {
 		if (stocks[x].id == id) {

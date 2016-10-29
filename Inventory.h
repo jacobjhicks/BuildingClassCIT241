@@ -17,6 +17,7 @@ public:
 	std::vector<std::string> outputList();
 	void checkForLow();
 	bool itemExists(std::string itemID);
+	bool itemInStock(std::string itemID, int quantity);
 	Stock& findItem(std::string id);
 	void createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint);
 	orderItem checkIfInStock(std::string id, int quantity);
