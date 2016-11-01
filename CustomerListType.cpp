@@ -205,6 +205,19 @@ void CustomerListType::addOrder(CustomerType customer, const Order & order)
 	}
 }
 
+void CustomerListType::removeOrder(CustomerType customer, string OrderID)
+{
+	list<CustomerType>::iterator rmIt;
+	for (rmIt = customers.begin(); rmIt != customers.end(); ++rmIt)
+	{
+		if (customer == *rmIt)
+		{
+			rmIt->removeOrder(OrderID);
+			break;
+		}
+	}
+}
+
 /**
 * Returns an iterator to the first customer.
 */

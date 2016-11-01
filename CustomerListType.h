@@ -26,6 +26,8 @@ public:
 	void removeCustomer(CustomerType customer);
 	string getOrders(CustomerType customer);
 	void addOrder(CustomerType customer, const Order & order);
+	void removeOrder(CustomerType customer, string OrderID);
+
 
 	list<CustomerType>::iterator begin();
 	list<CustomerType>::iterator end();

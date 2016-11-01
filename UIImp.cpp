@@ -323,7 +323,7 @@ void UI::cancelOrder()
 				if (customer.findOrder(orderID))
 				{
 					invalidOrder = false;
-					customer.removeOrder(orderID);
+					totalCustomers.removeOrder(customer,orderID);
 					cout << "Order " << orderID << " removed from customers order list." << endl;
 				}
 				else
