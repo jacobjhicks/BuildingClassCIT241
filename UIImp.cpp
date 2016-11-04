@@ -385,7 +385,6 @@ void UI::invMenu()
 			break;
 		case 2:     // display an item in inventory
 			displayItem();
-			// TODO: There are 2 versions of this function. Pick one and verify that it works.
 			break;
 		case 3:		//process an order from a supplier
 			processOrder();
@@ -446,60 +445,66 @@ void UI::displayItem()
 
 void UI::generateOrdersReport()
 {
-	cout << "Orders for a month Procedure" << endl;
-	string a, b, y;
-	cin.ignore(10000, '\n');
-	cout << "What is the month for the Order Header?" << endl;
-	getline(cin, a);
-	cout << "What is the Year for the order header?" << endl;
-	getline(cin, b);
+	string month, year;
+
 	//get month and year for order header
-	//vector<SupplierItem> supplist;
+	cout << "Orders for a month Procedure" << endl;
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	cout << "What is the month for the Order Header?" << endl;
+	getline(cin, month);
+	cout << "What is the Year for the order header?" << endl;
+	getline(cin, year);
+
 	vector<SupplierItem> supplist;
 	list<string> suppMas;
 
-	for (auto c = totalInventory.stocks.begin(); c != totalInventory.stocks.end(); ++c)
+	// for each stock in invlis, add to reorder list if needed.
+	for (Stock stockItem : totalInventory.stocks)
 	{
-		if ((*c).getInStock() < (*c).getReorderPoint())
+		if (stockItem.getInStock() < stockItem.getReorderPoint())
 		{
-			suppMas.push_back((*c).getSupplierID());
-			supplist.push_back(SupplierItem((*c).getSupplierID(), (*c).getID(), (*c).getReorderAmount()));
+			suppMas.push_back(stockItem.getSupplierID());
+			supplist.push_back(SupplierItem(stockItem.getSupplierID(), stockItem.getID(), stockItem.getReorderAmount()));
 		}
 	}
 
-
-
-	for (auto j = supplist.begin(); j != supplist.end(); ++j)
+	// Display reorder list
+	for (SupplierItem supplierItem : supplist)
 	{
 
-		cout << (*j).getiID() << "|" << (*j).getAmount() << endl;
+		cout << supplierItem.getiID() << "|" << supplierItem.getAmount() << endl;
 	}
-
+	
+	// Remove duplicates and sort
 	suppMas.unique();
 	sort(supplist.begin(), supplist.end());
 
-	for (auto u = suppMas.begin(); u != suppMas.end(); ++u)
+	for (string suppMasObject : suppMas)
 	{
 		stringstream filename;
-		filename << *u << a << "-" << b << ".txt";
-		y = filename.str();
-		ofstream outData(y.c_str());
+
+		filename << suppMasObject << month << "-" << year << ".txt";
+
+		ofstream outData(filename.str().c_str());
 		if (!outData)
 		{
 			cout << "File " << filename.str() << " not created." << endl;
 		}
 		else
 		{
-			outData << "Supplier " << *u << " Order: " << a << "/" << b << endl;
-			for (auto d = supplist.begin(); d != supplist.end(); ++d)
+			outData << "Supplier " << suppMasObject << " Order: " << month << "/" << year << endl;
+			for (SupplierItem suppListObject : supplist)
 			{
-				if ((*d).getSupp() == *u)
+				if (suppListObject.getSupp() == suppMasObject)
 				{
-					outData << (*d).getiID() << "|" << (*d).getAmount() << endl;
+					outData << suppListObject.getiID() << "|" << suppListObject.getAmount() << endl;
 				}
 			}
+
 			outData.close();
-			cout << "File " << y << " created" << endl;
+
+			cout << "File " << filename.str() << " created" << endl;
+
 			ofstream upD("fileList.txt", ios::app);
 			if (!upD)
 			{
@@ -507,88 +512,15 @@ void UI::generateOrdersReport()
 			}
 			else
 			{
-				upD << y << endl;
+				upD << filename.str() << endl;
 			}
+
 			upD.close();
-			// for each stock in invlist
-			// if stock.getInStock() < stock.getReorderPoint()
-			// supplist.push_back(SupplierItem(stock.getSupplierID(),
-			// stock.getID(), stock.reorderAmount())
-			// endif
-			// next
-			// supplist.sort
-			// generate report with breaks at supplierID change
 		}
 		cout << "Processing Complete" << endl;
 	}
 }
 
-void UI::processOrder()
-{
-	bool cancelOpenFile = false;
-	ofstream orderFile;
-	do
-	{
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-		string fileName;
-		// prompt user for filename of order from a supplier
-		cout << "Enter the name of the order file (or EXIT to go back): ";
-		cin >> fileName;
-		stringstream exitCheck;
-		for (char c : fileName)
-			exitCheck << toupper(c);
-
-		// Exit open file
-		if (exitCheck.str() == "EXIT")
-		{
-			cancelOpenFile = true;
-			break;
-		}
-
-		// establish an input file using filename from user
-		orderFile.open(fileName);		// or maybe have a directory for it: orderFile.open($ordersDirectoryNameVariable + "\\" + fileName );
-
-										// check if file was unable to open
-		if (orderFile.fail())
-		{
-			cout << "File not found. Please Re-";
-		}
-	} while (orderFile.fail());
-
-	// if user wants to EXIT...
-	if (cancelOpenFile)
-	{
-		orderFile.close();
-		return; // exit function early
-	}
-
-	/* FILE ASSUMPTIONS
-	[customer id]
-	[order id]
-	[item id] [quantitiy]
-	[item id] [quantitiy]
-	...
-	*/
-
-	//		while more records
-	//			read new item information - itemid, qty
-	//			Stock& stk = invlist.findItem(itemid)
-	//			if stk not emptystock
-	//				stk.incrementQuantity(qty)
-	//			else
-	//				error message
-	//			endif
-	//		end while
-	// close file
-	orderFile.close();
-}
-
-	//
-	//The other implementation of Case 3:
-	//
-/*
 void UI::processOrder()
 {
 	cout << "Process Supplier Order" << endl;
@@ -609,11 +541,14 @@ void UI::processOrder()
 		}
 	}
 	FL.close();
+
 	string file, a;
 	ifstream inDat;
+
 	cout << "Please enter the Supplier file name" << endl;
-	cin.ignore(10000, '\n');
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	getline(cin, file);
+
 	//check if file was able to open
 	inDat.open(file);
 	if (!inDat)
@@ -670,7 +605,7 @@ void UI::processOrder()
 		inDat.close();
 	}
 }
-*/
+
 
 	void UI::generateInventoryReport()
 {
@@ -757,34 +692,6 @@ void UI::addOrderData(Order &newOrder, string custID)
 	newOrder = tempOrder;
 }
 
-
-//void UI::custMenu(int ID)
-//{
-//	string itemID, qnty;
-//	Listinvertory;
-//	cin >> itemID
-//	if ()
-//	{
-//
-//	}
-//}
-
-// addOrderData routine
-//void UI::addOrderData(CustomerType& cust)
-//      collect orderid, orderdate, deliverydate
-//		create order object
-//		while more orderitems
-//			collect orderitem data - itemid, quantity
-//			orderitem reference = ord.findOrderItem(itemid)
-//			if orderitem refence != emptyorderitem,
-//				orderitem reference.incrementQuantity(quantity)
-//			else
-//				orderitem neworditem = invlist.checkIfInStock(itemid, quantity)
-//				ord.addOrderItem(neworderitem)
-//			endif
-//			ask if more orderitems
-//		end while when no more order items
-//		cust.addOrder(order object)
 
 
 

@@ -46,9 +46,7 @@ private:
 	void generateOrdersReport();
 	void generateInventoryReport();
 
-	//void custMenu(int ID);
 	void addOrderData(Order &newOrder, string custID);
-	// void updateOrderMenu();
 
 
 	CustomerListType totalCustomers; // customer list
