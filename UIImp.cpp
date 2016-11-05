@@ -726,9 +726,58 @@ void UI::updateOrderData(Order & order)
 		switch (menuOption)
 		{
 		case 1:
+			invadItem = false;
+			moreItems = true;
+			do
+			{
+				do
+				{
+					cout << "\n" << order.printOrder();
+					if (invadItem)
+					{
+						cout << "ERROR: Invalid item ID entered." << endl;
+						cout << "Please Re-";
+					}
+					cout << "Enter Item Id: ";
+					cin >> itemID;
+					cout << "\nEnter new quantity: ";
+					cin >> quantity;
+					if (order.itemInOrder(itemID)) {
+						invadItem = false;
+					}
+					else {
+						invadItem = true;
+					}
+				} while (invadItem);
+				orderItem *tempOrderItem = new orderItem;
+				*tempOrderItem = order.getItem(itemID);
 
+				if (tempOrderItem->getQuant() < quantity){
+					if (totalInventory.itemInStock(itemID, (tempOrderItem->getQuant() - quantity))){
+						totalInventory.removeStock(itemID, (tempOrderItem->getQuant() - quantity));
+						tempOrderItem->setQuant(quantity);
+					}else {
+						cout << "\nError not enough in invertory to add that much to order!\n";
+					}
+				}
+				else if(tempOrderItem->getQuant() > quantity){
+					totalInventory.addStock(itemID, (tempOrderItem->getQuant()- quantity));
+					tempOrderItem->setQuant(quantity);
+				}else
+					cout << "\nError entered quantity is the same ans the current quantity.\n";
+				order.removeOrderItem(order.getItem(itemID));
+				order.addOrderItem(*tempOrderItem);
+				delete tempOrderItem;
+				cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
+				cin >> option;
+				std::transform(option.begin(), option.end(), option.begin(), ::toupper);
+				if (option == "FINISH")
+					moreItems = false;
+			} while (moreItems);
 			break;
 		case 2:
+			invadItem = false;
+			moreItems = true;
 			do
 			{
 				do
@@ -761,6 +810,8 @@ void UI::updateOrderData(Order & order)
 			} while (moreItems);
 			break;
 		case 3:
+			invadItem = false;
+			moreItems = true;
 			do
 			{
 				do
