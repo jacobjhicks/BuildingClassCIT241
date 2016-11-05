@@ -72,8 +72,6 @@ Stock stringToStock(std::string s) {
 
 	stockItem.desc = vars[1];
 
-	stockItem.quantity = std::stoi(vars[2]);
-
 	stockItem.inStock = std::stoi(vars[3]);
 
 	stockItem.supplierId = vars[4];
@@ -103,12 +101,12 @@ return rip;
 */
 
 void Stock::incrementQuantity(int qty) {
-	quantity += qty;
+	inStock += qty;
 }
 
 void Stock::decreaseQuantity(int qty)
 {
-	quantity -= qty;
+	inStock -= qty;
 }
 
 std::string Stock::getID() {

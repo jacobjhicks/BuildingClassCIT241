@@ -15,8 +15,8 @@ void Inventory::checkForLow() {
 orderItem Inventory::checkIfInStock(std::string id, int quantity) {
 	for (int x = 0; x < stocks.size(); x++) {
 		if (stocks[x].id == id) {
-			if (stocks[x].quantity >= quantity) {
-				stocks[x].quantity -= quantity;
+			if (stocks[x].inStock >= quantity) {
+				stocks[x].inStock -= quantity;
 			}
 			else {
 				checkForLow();
@@ -84,6 +84,15 @@ void Inventory::removeStock(string itemID, int quantity)
 	}
 }
 
+void Inventory::addStock(string itemID, int quantity)
+{
+	for (Stock item : stocks)
+	{
+		if (item.getID() == itemID)
+			item.incrementQuantity(quantity);
+	}
+}
+
 Stock& Inventory::findItem(std::string id) {
 	for (int x = 0; x < stocks.size(); x++) {
 		if (stocks[x].id == id) {
@@ -126,7 +135,6 @@ void Inventory::createItem(std::string id, std::string desc, int quantity, int i
 
 	s.id = id;
 	s.desc = desc;
-	s.quantity = quantity;
 	s.inStock = inStock;
 	s.supplierId = supplierId;
 	s.reorderPoint = reorderPoint;

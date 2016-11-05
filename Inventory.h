@@ -21,6 +21,7 @@ public:
 	string getItemDescription(string itemID);
 	double getItemPrice(string itemID);
 	void removeStock(string itemID, int quantity);
+	void addStock(string itemID, int quantity);
 	Stock& findItem(std::string id);
 	void createItem(std::string id, std::string desc, int quantity, int inStock, std::string supplierId, int reorderPoint);
 	orderItem checkIfInStock(std::string id, int quantity);

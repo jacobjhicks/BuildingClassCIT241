@@ -27,7 +27,6 @@ public:
 // private: Should be able to make these private...  
 	std::string id;
 	std::string desc;
-	int quantity;
 	int inStock = 0;
 	std::string supplierId;
 	int reorderPoint = -1;

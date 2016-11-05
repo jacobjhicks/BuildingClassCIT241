@@ -21,9 +21,12 @@ public:
 	bool isOrder(string inStr);
 	bool operator==(Order& rhs);
 	bool operator<(Order& rhs);
+	bool itemInOrder(string itemID);
 	string printOrder();
 	void addOrderItem(const orderItem& inItem);
-	void removeOrderItem(orderItem& inItem);
+	void removeOrderItem(orderItem inItem);
+	orderItem getItem(string itemID);
+
 	string getOrderID();
 	Date getOrderDate();
 	Date getDeliveryDate();

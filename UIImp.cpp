@@ -676,9 +676,8 @@ void UI::addOrderData(Order &newOrder, string custID)
 {
 	string ordId, ordDateString, delDateString, itemID, option;
 	Date ordDate,delDate;
-	int quantity;
 	bool moreItems = true, invadOrderId = false, invadItem= false;
-	orderItem *tempItem;
+	
 	cout << endl;
 	do
 	{
@@ -710,15 +709,18 @@ void UI::updateOrderData(Order & order)
 	int menuOption, quantity;
 	string itemID, option;
 	orderItem *tempItem;
+	system("CLS");
 
 	cout << "\n\n" << order.printOrder();
-	cout << "\n1) Update quantity of item"
+	
+	do
+	{
+		cout << "\n1) Update quantity of item"
 		<< "\n2) Remove Item"
 		<< "\n3) Add Item"
 		<< "\n4) View current order"
 		<< "\n5) Finished editing order\n";
-	do
-	{
+
 		cout << "Enter option: ";
 		cin >> menuOption;
 		switch (menuOption)
@@ -727,7 +729,36 @@ void UI::updateOrderData(Order & order)
 
 			break;
 		case 2:
-
+			do
+			{
+				do
+				{
+					cout << "\n" << order.printOrder();
+					if (invadItem)
+					{
+						cout << "ERROR: Invalid item ID entered." << endl;
+						cout << "Please Re-";
+					}
+					cout << "Enter Item Id: ";
+					cin >> itemID;
+					if (order.itemInOrder(itemID)) {
+						invadItem = false;
+					}
+					else {
+						invadItem = true;
+					}
+				} while (invadItem);
+				orderItem *tempOrderItem = new orderItem;
+				*tempOrderItem = order.getItem(itemID);
+				totalInventory.addStock(itemID, tempOrderItem->getQuant());
+				order.removeOrderItem(*tempOrderItem);
+				delete tempOrderItem;
+				cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
+				cin >> option;
+				std::transform(option.begin(), option.end(), option.begin(), ::toupper);
+				if (option == "FINISH")
+					moreItems = false;
+			} while (moreItems);
 			break;
 		case 3:
 			do
@@ -769,10 +800,8 @@ void UI::updateOrderData(Order & order)
 			break;
 		default:
 			cout << "ERROR: Invalid item option entered." << endl;
-			cout << "Please Re-";
-			break;
+						break;
 		}
-
 	} while (stayInMenu);
 
 }

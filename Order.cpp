@@ -56,10 +56,22 @@ void Order::addOrderItem(const orderItem& inItem)
 
 }
 
-void Order::removeOrderItem(orderItem& inItem)
+void Order::removeOrderItem(orderItem inItem)
 {
 	orderItems.remove(inItem);
 
+}
+
+orderItem Order::getItem(string itemID)
+{
+	list<orderItem>::iterator rmIt;
+	for (rmIt = orderItems.begin(); rmIt != orderItems.end(); ++rmIt)
+	{
+		if ((rmIt->getitemID()) == itemID)
+			return *rmIt;
+	}
+	return *rmIt;
+	throw exception("Item not found!");
 }
 
 string Order::getOrderID()
@@ -131,6 +143,17 @@ bool Order::operator<(Order& rhs)
 		return true;
 	else
 		return false;
+}
+
+bool Order::itemInOrder(string itemID)
+{
+	list<orderItem>::iterator rmIt;
+	for (rmIt = orderItems.begin(); rmIt != orderItems.end(); ++rmIt)
+	{
+		if (itemID == rmIt-> getitemID())
+			return true;
+	}
+	return false;
 }
 
 
