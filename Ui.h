@@ -47,7 +47,7 @@ private:
 	void generateInventoryReport();
 
 	void addOrderData(Order &newOrder, string custID);
-
+	void updateOrderData(Order &order);
 
 	CustomerListType totalCustomers; // customer list
 	Inventory totalInventory; // inventory list

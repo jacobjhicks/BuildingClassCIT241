@@ -298,7 +298,7 @@ void UI::addOrder()
 	} while (invalidCustomer);
 }
 
-void UI::cancelOrder()
+void UI::cancelOrder() // Need to repopulate Inventory
 {
 	string custID;
 	bool notValidCustomer;
@@ -344,7 +344,48 @@ void UI::cancelOrder()
 
 void UI::updateOrder()
 {
-	// TODO: Make this function work.
+	string custID;
+	bool notValidCustomer;
+
+	listCustomerInformation();
+
+	do
+	{
+		cout << "Enter customer ID: ";
+		cin >> custID;
+		if (totalCustomers.findCustomer(custID)) { // iterator = find customer
+			notValidCustomer = false;
+			CustomerType customer = totalCustomers.getCustomer(custID);
+			cout << "Orders for customer " << customer.getId() << " : " << customer.getName() << endl;
+			cout << customer.printOrders() << endl;
+			bool invalidOrder = true;
+			string orderID;
+			Order *tempOrder = new Order();
+			do
+			{
+				cout << "Enter order number to Update: ";
+				cin >> orderID;
+				if (customer.findOrder(orderID))
+				{
+					invalidOrder = false;
+					*tempOrder = customer.getOrder(orderID);
+					updateOrderData(*tempOrder);
+					cout << "Order " << orderID << " Updated." << endl;
+				}
+				else
+				{
+					invalidOrder = true;
+					cout << "ERROR: Invalid order ID entered." << endl;
+					cout << "Please Re-";
+				}
+
+			} while (invalidOrder);
+		}
+		else {
+			notValidCustomer = true;
+			cout << "ERROR: Invalid customer ID entered. \nPlease Re-";
+		}
+	} while (notValidCustomer);
 }
 
 
@@ -658,38 +699,82 @@ void UI::addOrderData(Order &newOrder, string custID)
 	cout << "\nEnter Delivery Date Ex: 1/1/1990: ";
 	cin >> delDateString;
 	delDate = { delDateString };
-	Order tempOrder(ordId, ordDate, delDate);
-	
+	Order tempOrder(ordId, ordDate, delDate);	
+	updateOrderData(tempOrder);
+	newOrder = tempOrder;
+}
+
+void UI::updateOrderData(Order & order)
+{
+	bool stayInMenu = true, invadItem = false, moreItems = true;
+	int menuOption, quantity;
+	string itemID, option;
+	orderItem *tempItem;
+
+	cout << "\n\n" << order.printOrder();
+	cout << "\n1) Update quantity of item"
+		<< "\n2) Remove Item"
+		<< "\n3) Add Item"
+		<< "\n4) View current order"
+		<< "\n5) Finished editing order\n";
 	do
 	{
-		do
+		cout << "Enter option: ";
+		cin >> menuOption;
+		switch (menuOption)
 		{
-			listInventory();
-			if (invadItem)
+		case 1:
+
+			break;
+		case 2:
+
+			break;
+		case 3:
+			do
 			{
-				cout << "ERROR: Invalid item ID entered." << endl;
-				cout << "Please Re-";
-			}
-			cout << "Enter Item Id: ";
-			cin >> itemID;
-			cout << "\nEnter quantity: ";
-			cin >> quantity;
-			if (totalInventory.itemInStock(itemID, quantity)) {
-				invadItem = false;
-			}else{
-				invadItem = true;
-			}
-		} while (invadItem);		
-		totalInventory.removeStock(itemID, quantity);
-		tempItem = new orderItem(itemID, (totalInventory.getItemDescription(itemID)), quantity, (totalInventory.getItemPrice(itemID)));
-		tempOrder.addOrderItem(*tempItem);
-		cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
-		cin >> option;
-		std::transform(option.begin(), option.end(), option.begin(), ::toupper);
-		if (option == "FINISH")
-			moreItems = false;
-	} while (moreItems);
-	newOrder = tempOrder;
+				do
+				{
+					listInventory();
+					if (invadItem)
+					{
+						cout << "ERROR: Invalid item ID entered." << endl;
+						cout << "Please Re-";
+					}
+					cout << "Enter Item Id: ";
+					cin >> itemID;
+					cout << "\nEnter quantity: ";
+					cin >> quantity;
+					if (totalInventory.itemInStock(itemID, quantity)) {
+						invadItem = false;
+					}
+					else {
+						invadItem = true;
+					}
+				} while (invadItem);
+				totalInventory.removeStock(itemID, quantity);
+				tempItem = new orderItem(itemID, (totalInventory.getItemDescription(itemID)), quantity, (totalInventory.getItemPrice(itemID)));
+				order.addOrderItem(*tempItem);
+				cout << "\nEnter 'Finish' to finish adding items otherwise any charter to continue entering items: ";
+				cin >> option;
+				std::transform(option.begin(), option.end(), option.begin(), ::toupper);
+				if (option == "FINISH")
+					moreItems = false;
+			} while (moreItems);
+			break;
+		case 4:
+			cout << "\n" << order.printOrder();
+			break;
+		case 5:
+			stayInMenu = false;
+			break;
+		default:
+			cout << "ERROR: Invalid item option entered." << endl;
+			cout << "Please Re-";
+			break;
+		}
+
+	} while (stayInMenu);
+
 }
 
 
