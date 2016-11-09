@@ -12,7 +12,7 @@ orderItem::~orderItem()
 {
 }
 
-orderItem::orderItem(string a, string b, int c, double d): itemID(a), itemDesc(b), quantity(c), price(c)
+orderItem::orderItem(string a, string b, int c, double d): itemID(a), itemDesc(b), quantity(c), price(d)
 {
 }
 
